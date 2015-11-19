@@ -2,7 +2,6 @@ package romelo333.rflux.network;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import cpw.mods.fml.relauncher.Side;
 
 public class PacketHandler {
     public static SimpleNetworkWrapper INSTANCE;
@@ -16,12 +15,7 @@ public class PacketHandler {
         INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(channelName);
 
         // Server side
-        INSTANCE.registerMessage(PacketToggleMode.class, PacketToggleMode.class, nextID(), Side.SERVER);
-        INSTANCE.registerMessage(PacketGetProtectedBlocks.class, PacketGetProtectedBlocks.class, nextID(), Side.SERVER);
-        INSTANCE.registerMessage(PacketGetProtectedBlockCount.class, PacketGetProtectedBlockCount.class, nextID(), Side.SERVER);
 
         // Client side
-        INSTANCE.registerMessage(PacketReturnProtectedBlocksHandler.class, PacketReturnProtectedBlocks.class, nextID(), Side.CLIENT);
-        INSTANCE.registerMessage(PacketReturnProtectedBlockCountHandler.class, PacketReturnProtectedBlockCount.class, nextID(), Side.CLIENT);
     }
 }

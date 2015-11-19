@@ -7,7 +7,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import org.apache.logging.log4j.Level;
 import romelo333.rflux.*;
-import romelo333.rflux.Items.GenericWand;
 import romelo333.rflux.network.PacketHandler;
 import romelo333.rflux.varia.WrenchChecker;
 
@@ -21,7 +20,6 @@ public abstract class CommonProxy {
         ModBlocks.init();
         readMainConfig();
         ModCrafting.init();
-        GenericWand.setupChestLoot();
         PacketHandler.registerMessages("rflux");
     }
 
@@ -29,7 +27,7 @@ public abstract class CommonProxy {
         Configuration cfg = mainConfig;
         try {
             cfg.load();
-            cfg.addCustomCategoryComment(Config.CATEGORY_WANDS, "Wand configuration");
+//            cfg.addCustomCategoryComment(Config.CATEGORY_WANDS, "Wand configuration");
             Config.init(cfg);
         } catch (Exception e1) {
             RFLux.logger.log(Level.ERROR, "Problem loading config file!", e1);

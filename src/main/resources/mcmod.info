@@ -1,8 +1,8 @@
 [
 {
-  "modid": "NotEnoughWands",
-  "name": "Not Enough Wands",
-  "description": "Wands, wands, and more wands",
+  "modid": "RFLux",
+  "name": "RF Lux",
+  "description": "Lights, lights, and more lights",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
