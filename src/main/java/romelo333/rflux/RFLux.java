@@ -34,7 +34,7 @@ public class RFLux {
     public static File modConfigDir;
     public static Configuration config;
 
-    public static CreativeTabs tabNew = new CreativeTabs("RFLux") {
+    public static CreativeTabs tabRFLux = new CreativeTabs("RFLux") {
         @Override
         @SideOnly(Side.CLIENT)
         public Item getTabIconItem() {

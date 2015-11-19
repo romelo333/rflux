@@ -13,6 +13,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import romelo333.rflux.RFLux;
 
 import java.util.List;
 import java.util.Random;
@@ -22,6 +23,7 @@ public class LightBlock extends Block implements ITileEntityProvider {
         super(Material.portal);
         setHardness(0.0f);
         setBlockName("blockLight");
+        setCreativeTab(RFLux.tabRFLux);
         setStepSound(Block.soundTypeCloth);
     }
 
@@ -43,6 +45,15 @@ public class LightBlock extends Block implements ITileEntityProvider {
     @Override
     public int getLightValue() {
         return 15;
+    }
+
+    @Override
+    public int getLightValue(IBlockAccess world, int x, int y, int z) {
+        int meta = world.getBlockMetadata(x, y, z);
+        if (meta == 1){
+            return getLightValue();
+        } else
+            return 0;
     }
 
     @Override
