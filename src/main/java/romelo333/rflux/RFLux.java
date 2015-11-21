@@ -27,7 +27,7 @@ public class RFLux {
     @SidedProxy(clientSide="romelo333.rflux.proxy.ClientProxy", serverSide="romelo333.rflux.proxy.ServerProxy")
     public static CommonProxy proxy;
 
-    @Mod.Instance("RFLux")
+    @Mod.Instance("rflux")
     public static RFLux instance;
     public static Logger logger;
     public static File mainConfigDir;
