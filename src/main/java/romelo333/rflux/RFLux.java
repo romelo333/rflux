@@ -20,7 +20,7 @@ import java.io.File;
         "required-after:Forge@["+ RFLux.MIN_FORGE_VER+",)",
         version = RFLux.VERSION)
 public class RFLux {
-    public static final String MODID = "RFLux";
+    public static final String MODID = "rflux";
     public static final String VERSION = "0.0.1";
     public static final String MIN_FORGE_VER = "10.13.2.1291";
 
