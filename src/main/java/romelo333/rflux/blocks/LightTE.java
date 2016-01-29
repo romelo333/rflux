@@ -7,9 +7,11 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
+import romelo333.rflux.ModBlocks;
 
-public class LightTE extends TileEntity implements IEnergyReceiver {
+public class LightTE extends TileEntity implements IEnergyReceiver, ITickable {
 
     private EnergyStorage storage = new EnergyStorage(1000);
 
@@ -19,39 +21,36 @@ public class LightTE extends TileEntity implements IEnergyReceiver {
     }
 
     @Override
-    public boolean canUpdate() {
-        return true;
-    }
-
-    @Override
-    public void updateEntity() {
+    public void update() {
         if (!worldObj.isRemote){
             if (storage.getEnergyStored() >= 100){
-                worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 3);
+                worldObj.setBlockState(getPos(), ModBlocks.lightBlock.getDefaultState().withProperty(LightBlock.LIT, true));
+                worldObj.markBlockForUpdate(getPos());
                 storage.extractEnergy(100, false);
             } else {
-                worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3);
+                worldObj.setBlockState(getPos(), ModBlocks.lightBlock.getDefaultState().withProperty(LightBlock.LIT, true));
+                worldObj.markBlockForUpdate(getPos());
             }
         }
     }
 
     @Override
-    public int getEnergyStored(ForgeDirection from) {
+    public int getEnergyStored(EnumFacing from) {
         return storage.getEnergyStored();
     }
 
     @Override
-    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
+    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate) {
         return storage.receiveEnergy(maxReceive, simulate);
     }
 
     @Override
-    public int getMaxEnergyStored(ForgeDirection from) {
+    public int getMaxEnergyStored(EnumFacing from) {
         return 1000;
     }
 
     @Override
-    public boolean canConnectEnergy(ForgeDirection from) {
+    public boolean canConnectEnergy(EnumFacing from) {
         return true;
     }
 
@@ -59,12 +58,12 @@ public class LightTE extends TileEntity implements IEnergyReceiver {
     public Packet getDescriptionPacket() {
         NBTTagCompound nbtTag = new NBTTagCompound();
         this.writeToNBT(nbtTag);
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 1, nbtTag);
+        return new S35PacketUpdateTileEntity(getPos(), 1, nbtTag);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet) {
-        readFromNBT(packet.func_148857_g());
+        readFromNBT(packet.getNbtCompound());
     }
 
 }

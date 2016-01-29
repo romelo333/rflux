@@ -1,30 +1,42 @@
 package romelo333.rflux.blocks;
 
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import romelo333.rflux.RFLux;
 
 import java.util.List;
 import java.util.Random;
 
 public class LightBlock extends Block implements ITileEntityProvider {
+
+    public static PropertyBool LIT = PropertyBool.create("lit");
+
     public LightBlock() {
         super(Material.portal);
         setHardness(0.0f);
-        setBlockName("blockLight");
+        setUnlocalizedName("block_light");
+        setRegistryName("block_light");
         setCreativeTab(RFLux.tabRFLux);
         setStepSound(Block.soundTypeCloth);
+        GameRegistry.registerBlock(this);
+        GameRegistry.registerTileEntity(LightTE.class, "block_light");
     }
 
     @Override
@@ -34,11 +46,11 @@ public class LightBlock extends Block implements ITileEntityProvider {
 
     @Override
     public TileEntity createNewTileEntity(World world, int i) {
-        return null;
+        return new LightTE();
     }
 
     @Override
-    public TileEntity createTileEntity(World world, int metadata) {
+    public TileEntity createTileEntity(World world, IBlockState state) {
         return new LightTE();
     }
 
@@ -48,25 +60,27 @@ public class LightBlock extends Block implements ITileEntityProvider {
     }
 
     @Override
-    public int getLightValue(IBlockAccess world, int x, int y, int z) {
-        int meta = world.getBlockMetadata(x, y, z);
-        if (meta == 1){
+    public int getLightValue(IBlockAccess world, BlockPos pos) {
+        IBlockState blockState = world.getBlockState(pos);
+        if (blockState.getValue(LIT)) {
             return getLightValue();
-        } else
+        } else {
             return 0;
+        }
     }
 
     @Override
-    public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB box, List list, Entity entity) {
+    public void addCollisionBoxesToList(World worldIn, BlockPos pos, IBlockState state, AxisAlignedBB mask, List<AxisAlignedBB> list, Entity collidingEntity) {
     }
 
+
     @Override
-    public boolean shouldSideBeRendered(IBlockAccess blockAccess, int x, int y, int z, int side) {
+    public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
         return false;
     }
 
     @Override
-    public boolean renderAsNormalBlock() {
+    public boolean isBlockNormalCube() {
         return false;
     }
 
@@ -83,7 +97,23 @@ public class LightBlock extends Block implements ITileEntityProvider {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean addDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer) {
+    public boolean addDestroyEffects(World world, BlockPos pos, EffectRenderer effectRenderer) {
         return true;
     }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return getDefaultState().withProperty(LIT, (meta & 1) == 1);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(LIT) ? 1 : 0;
+    }
+
+    @Override
+    protected BlockState createBlockState() {
+        return new BlockState(this, LIT);
+    }
+
 }

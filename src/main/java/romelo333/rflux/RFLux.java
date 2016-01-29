@@ -1,16 +1,16 @@
 package romelo333.rflux;
 
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Logger;
 import romelo333.rflux.proxy.CommonProxy;
 
@@ -22,7 +22,7 @@ import java.io.File;
 public class RFLux {
     public static final String MODID = "rflux";
     public static final String VERSION = "0.0.1";
-    public static final String MIN_FORGE_VER = "10.13.2.1291";
+    public static final String MIN_FORGE_VER = "11.15.0.1600";
 
     @SidedProxy(clientSide="romelo333.rflux.proxy.ClientProxy", serverSide="romelo333.rflux.proxy.ServerProxy")
     public static CommonProxy proxy;

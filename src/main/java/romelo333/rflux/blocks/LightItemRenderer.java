@@ -1,18 +1,16 @@
 package romelo333.rflux.blocks;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.IItemRenderer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import romelo333.rflux.ModRenderers;
 import romelo333.rflux.RFLux;
 
 @SideOnly(Side.CLIENT)
-public class LightItemRenderer implements IItemRenderer {
+public class LightItemRenderer {/*implements IItemRenderer {
     ResourceLocation texture = new ResourceLocation(RFLux.MODID.toLowerCase(), "textures/blocks/light.png");
 
     @Override
@@ -46,5 +44,5 @@ public class LightItemRenderer implements IItemRenderer {
         if (!blending) {
             GL11.glDisable(GL11.GL_BLEND);
         }
-    }
+    }*/
 }
