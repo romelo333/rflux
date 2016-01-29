@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.S29PacketSoundEffect;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
@@ -123,10 +122,9 @@ public class Tools {
 
         for (int j = 0; j < worldObj.playerEntities.size(); ++j) {
             EntityPlayerMP entityplayermp = (EntityPlayerMP)worldObj.playerEntities.get(j);
-            ChunkCoordinates chunkcoordinates = entityplayermp.getPlayerCoordinates();
-            double d7 = x - chunkcoordinates.posX;
-            double d8 = y - chunkcoordinates.posY;
-            double d9 = z - chunkcoordinates.posZ;
+            double d7 = x - entityplayermp.posX;
+            double d8 = y - entityplayermp.posY;
+            double d9 = z - entityplayermp.posZ;
             double d10 = d7 * d7 + d8 * d8 + d9 * d9;
 
             if (d10 <= 256.0D) {

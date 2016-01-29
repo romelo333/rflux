@@ -1,6 +1,6 @@
 package romelo333.rflux.varia;
 
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 
 public class Coordinate {
     private final int x;
@@ -11,10 +11,6 @@ public class Coordinate {
         this.x = x;
         this.y = y;
         this.z = z;
-    }
-
-    public Coordinate add(ForgeDirection dir) {
-        return new Coordinate(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ);
     }
 
     public int getX() {
