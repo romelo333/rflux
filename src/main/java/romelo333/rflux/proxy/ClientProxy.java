@@ -1,25 +1,26 @@
 package romelo333.rflux.proxy;
 
+import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import romelo333.rflux.KeyBindings;
-import romelo333.rflux.KeyInputHandler;
-import romelo333.rflux.ModRenderers;
+import romelo333.rflux.*;
 
 public class ClientProxy extends CommonProxy {
 
     @Override
     public void preInit(FMLPreInitializationEvent e) {
         super.preInit(e);
+        OBJLoader.instance.addDomain(RFLux.MODID);
+        ModBlocks.initModels();
     }
 
     @Override
     public void init(FMLInitializationEvent e) {
         super.init(e);
-        ModRenderers.init();
         MinecraftForge.EVENT_BUS.register(this);
         FMLCommonHandler.instance().bus().register(new KeyInputHandler());
         KeyBindings.init();

@@ -2,6 +2,7 @@ package romelo333.rflux.blocks;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -9,7 +10,6 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import romelo333.rflux.ModBlocks;
 
 public class LightTE extends TileEntity implements IEnergyReceiver, ITickable {
 
@@ -23,13 +23,12 @@ public class LightTE extends TileEntity implements IEnergyReceiver, ITickable {
     @Override
     public void update() {
         if (!worldObj.isRemote){
-            if (storage.getEnergyStored() >= 100){
-                worldObj.setBlockState(getPos(), ModBlocks.lightBlock.getDefaultState().withProperty(LightBlock.LIT, true));
-                worldObj.markBlockForUpdate(getPos());
+            IBlockState state = worldObj.getBlockState(getPos());
+            if (storage.getEnergyStored() >= 100) {
+                worldObj.setBlockState(getPos(), state.withProperty(LightBlock.LIT, true), 3);
                 storage.extractEnergy(100, false);
             } else {
-                worldObj.setBlockState(getPos(), ModBlocks.lightBlock.getDefaultState().withProperty(LightBlock.LIT, true));
-                worldObj.markBlockForUpdate(getPos());
+                worldObj.setBlockState(getPos(), state.withProperty(LightBlock.LIT, false), 3);
             }
         }
     }

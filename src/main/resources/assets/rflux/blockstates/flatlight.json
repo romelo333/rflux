@@ -1,0 +1,21 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "custom": { "flip-v": true },
+    "model": "rflux:flatlight.obj"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}],
+    "facing": {
+      "south": {},
+      "north": {"y": 180},
+      "east": {"y": 270},
+      "west": {"y": 90}
+    },
+    "lit": {
+      "false": {},
+      "true": {}
+    }
+  }
+}
