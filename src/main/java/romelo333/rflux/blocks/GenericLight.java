@@ -3,18 +3,20 @@ package romelo333.rflux.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.particle.EffectRenderer;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
@@ -37,14 +39,15 @@ public class GenericLight extends Block implements ITileEntityProvider {
     public static PropertyBool LIT = PropertyBool.create("lit");
 
     public GenericLight(String name, Class<? extends TileEntity> c) {
-        super(Material.portal);
+        super(Material.PORTAL);
         setHardness(0.0f);
-        setUnlocalizedName(name);
+        setUnlocalizedName(RFLux.MODID + "." + name);
         setRegistryName(name);
         setCreativeTab(RFLux.tabRFLux);
-        setStepSound(Block.soundTypeCloth);
-        GameRegistry.registerBlock(this);
-        GameRegistry.registerTileEntity(c, RFLux.MODID + ":" + name);
+        setSoundType(SoundType.CLOTH);
+        GameRegistry.register(this);
+        GameRegistry.register(new ItemBlock(this), getRegistryName());
+        GameRegistry.registerTileEntity(c, RFLux.MODID + "_" + name);
     }
 
     @SideOnly(Side.CLIENT)
@@ -56,42 +59,44 @@ public class GenericLight extends Block implements ITileEntityProvider {
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         return null;
     }
+
     @Override
-    public int getLightValue() {
+    public int getLightValue(IBlockState state) {
         return 15;
     }
 
     @Override
-    public int getLightValue(IBlockAccess world, BlockPos pos) {
+    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
         IBlockState blockState = world.getBlockState(pos);
         if (blockState.getValue(LIT)) {
-            return getLightValue();
+            return getLightValue(state);
         } else {
             return 0;
         }
     }
+
     @Override
-    public void addCollisionBoxesToList(World worldIn, BlockPos pos, IBlockState state, AxisAlignedBB mask, List<AxisAlignedBB> list, Entity collidingEntity) {
+    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn) {
     }
 
     @Override
-    public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
+    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
         return false;
     }
 
     @Override
-    public boolean isBlockNormalCube() {
+    public boolean isBlockNormalCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube() {
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
-    @Override
     @SideOnly(Side.CLIENT)
-    public boolean addHitEffects(World worldObj, MovingObjectPosition target, EffectRenderer effectRenderer) {
+    @Override
+    public boolean addHitEffects(IBlockState state, World worldObj, RayTraceResult target, EffectRenderer effectRenderer) {
         return true;
     }
 

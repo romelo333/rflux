@@ -2,13 +2,13 @@ package romelo333.rflux.blocks;
 
 
 import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -42,8 +42,8 @@ public class LightBlock extends GenericLight {
     }
 
     @Override
-    protected BlockState createBlockState() {
-        return new BlockState(this, FACING, LIT);
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, FACING, LIT);
     }
 
     @Override
