@@ -14,7 +14,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void preInit(FMLPreInitializationEvent e) {
         super.preInit(e);
-        OBJLoader.instance.addDomain(RFLux.MODID);
+        OBJLoader.INSTANCE.addDomain(RFLux.MODID);
         ModBlocks.initModels();
     }
 

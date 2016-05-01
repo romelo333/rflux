@@ -38,7 +38,7 @@ public class RFLux {
         @Override
         @SideOnly(Side.CLIENT)
         public Item getTabIconItem() {
-            return Items.glowstone_dust;
+            return Items.GLOWSTONE_DUST;
         }
     };
 

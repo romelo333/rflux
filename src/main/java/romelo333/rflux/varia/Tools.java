@@ -8,18 +8,20 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.play.server.S29PacketSoundEffect;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.network.play.server.SPacketSoundEffect;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 public class Tools {
     public static void error(EntityPlayer player, String msg) {
-        player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.RED + msg));
+        player.addChatComponentMessage(new TextComponentString(TextFormatting.RED + msg));
     }
 
     public static void notify(EntityPlayer player, String msg) {
-        player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.GREEN + msg));
+        player.addChatComponentMessage(new TextComponentString(TextFormatting.GREEN + msg));
     }
 
     public static boolean consumeInventoryItem(Item item, int meta, InventoryPlayer inv, EntityPlayer player) {
@@ -117,8 +119,8 @@ public class Tools {
     }
 
     // Server side: play a sound to all nearby players
-    public static void playSound(World worldObj, String soundName, double x, double y, double z, double volume, double pitch) {
-        S29PacketSoundEffect soundEffect = new S29PacketSoundEffect(soundName, x, y, z, (float) volume, (float) pitch);
+    public static void playSound(World worldObj, SoundEvent soundName, double x, double y, double z, double volume, double pitch) {
+        SPacketSoundEffect soundEffect = new SPacketSoundEffect(soundName, SoundCategory.BLOCKS, x, y, z, (float) volume, (float) pitch);
 
         for (int j = 0; j < worldObj.playerEntities.size(); ++j) {
             EntityPlayerMP entityplayermp = (EntityPlayerMP)worldObj.playerEntities.get(j);

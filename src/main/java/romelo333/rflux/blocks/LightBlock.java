@@ -3,22 +3,24 @@ package romelo333.rflux.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.particle.EffectRenderer;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
@@ -36,14 +38,15 @@ public class LightBlock extends Block implements ITileEntityProvider {
     public static PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 
     public LightBlock() {
-        super(Material.portal);
+        super(Material.PORTAL);
         setHardness(0.0f);
-        setUnlocalizedName("flatlight");
+        setUnlocalizedName(RFLux.MODID + "." + "flatlight");
         setRegistryName("flatlight");
         setCreativeTab(RFLux.tabRFLux);
-        setStepSound(Block.soundTypeCloth);
-        GameRegistry.registerBlock(this);
-        GameRegistry.registerTileEntity(LightTE.class, RFLux.MODID + ":flatlight");
+        setSoundType(SoundType.CLOTH);
+        GameRegistry.register(this);
+        GameRegistry.register(new ItemBlock(this), getRegistryName());
+        GameRegistry.registerTileEntity(LightTE.class, RFLux.MODID + "_flatlight");
     }
 
     @SideOnly(Side.CLIENT)
@@ -68,43 +71,43 @@ public class LightBlock extends Block implements ITileEntityProvider {
     }
 
     @Override
-    public int getLightValue() {
+    public int getLightValue(IBlockState state) {
         return 15;
     }
 
     @Override
-    public int getLightValue(IBlockAccess world, BlockPos pos) {
-        IBlockState blockState = world.getBlockState(pos);
-        if (blockState.getValue(LIT)) {
-            return getLightValue();
-        } else {
-            return 0;
-        }
+    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+//@todo fix
+//        IBlockState blockState = world.getBlockState(pos);
+//        if (blockState.getValue(LIT)) {
+//            return getLightValue(state);
+//        } else {
+//            return 0;
+//        }
+        return 15;
     }
 
     @Override
-    public void addCollisionBoxesToList(World worldIn, BlockPos pos, IBlockState state, AxisAlignedBB mask, List<AxisAlignedBB> list, Entity collidingEntity) {
+    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn) {
     }
 
-
     @Override
-    public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
+    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
         return false;
     }
 
     @Override
-    public boolean isBlockNormalCube() {
+    public boolean isBlockNormalCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube() {
+    public boolean isFullyOpaque(IBlockState state) {
         return false;
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public boolean addHitEffects(World worldObj, MovingObjectPosition target, EffectRenderer effectRenderer) {
+    public boolean addHitEffects(IBlockState state, World worldObj, RayTraceResult target, EffectRenderer effectRenderer) {
         return true;
     }
 
@@ -120,8 +123,8 @@ public class LightBlock extends Block implements ITileEntityProvider {
     }
 
     @Override
-    protected BlockState createBlockState() {
-        return new BlockState(this, FACING, LIT);
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, FACING, LIT);
     }
 
     @Override
