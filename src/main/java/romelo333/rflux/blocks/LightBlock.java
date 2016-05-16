@@ -1,24 +1,22 @@
 package romelo333.rflux.blocks;
 
 
-import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.Random;
 
 public class LightBlock extends GenericLight {
 
-    public static PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
-
     public LightBlock() {
         super("lightblock", LightTE.class);
+    }
+
+    @Override
+    public boolean hasNoRotation() {
+        return true;
     }
 
     @Override
@@ -38,25 +36,16 @@ public class LightBlock extends GenericLight {
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        return (state.getValue(FACING).getIndex() - 2) + (state.getValue(LIT) ? 8 : 0);
+        return (state.getValue(LIT) ? 8 : 0);
     }
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, FACING, LIT);
+        return new BlockStateContainer(this, LIT);
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(FACING, getFacingHoriz(meta&7)).withProperty(LIT, (meta&8) != 0);
-    }
-
-    public static EnumFacing getFacingHoriz(int meta) {
-        return EnumFacing.values()[meta + 2];
-    }
-
-    @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        world.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
+        return getDefaultState().withProperty(LIT, (meta&8) != 0);
     }
 }

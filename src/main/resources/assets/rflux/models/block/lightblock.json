@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "rflux:blocks/white",
+    "down": "rflux:blocks/white",
+    "up": "rflux:blocks/white",
+    "north": "rflux:blocks/white",
+    "east": "rflux:blocks/white",
+    "south": "rflux:blocks/white",
+    "west": "rflux:blocks/white"
+  }
+}
