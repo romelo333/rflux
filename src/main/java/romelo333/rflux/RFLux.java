@@ -35,6 +35,8 @@ public class RFLux implements ModBase {
     public static File mainConfigDir;
     public static File modConfigDir;
     public static Configuration config;
+    public static final int GUI_LIGHT = 1;
+
 
     public static CreativeTabs tabRFLux = new CreativeTabs("RFLux") {
         @Override

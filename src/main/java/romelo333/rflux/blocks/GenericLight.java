@@ -1,12 +1,19 @@
 package romelo333.rflux.blocks;
 
 
+import mcjty.lib.container.EmptyContainer;
 import mcjty.lib.container.GenericBlock;
+import mcjty.lib.container.GenericGuiContainer;
+import mcjty.lib.varia.Logging;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
@@ -18,6 +25,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import romelo333.rflux.RFLux;
+
+import java.lang.reflect.Constructor;
 
 public class GenericLight extends GenericBlock {
     public static enum PlacementType {
@@ -49,7 +58,7 @@ public class GenericLight extends GenericBlock {
 
     @Override
     public int getGuiID() {
-        return -1;
+        return RFLux.GUI_LIGHT;
     }
 
     @Override
@@ -70,6 +79,18 @@ public class GenericLight extends GenericBlock {
             return 0;
         }
     }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public GuiContainer createClientGui(EntityPlayer entityPlayer, TileEntity tileEntity) {
+        return new GuiLight((LightTE)tileEntity, new EmptyContainer(entityPlayer));
+    }
+
+    @Override
+    public Container createServerContainer(EntityPlayer entityPlayer, TileEntity tileEntity) {
+        return new EmptyContainer(entityPlayer);
+    }
+
 
 //    @Override
 //    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn) {
