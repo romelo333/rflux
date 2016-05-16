@@ -1,6 +1,7 @@
 package romelo333.rflux.blocks;
 
 
+import mcjty.lib.container.GenericBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
@@ -27,7 +28,7 @@ import romelo333.rflux.RFLux;
 
 import java.util.List;
 
-public class GenericLight extends Block implements ITileEntityProvider {
+public class GenericLight extends GenericBlock {
     public static enum PlacementType {
         NONE,
         HORIZONTAL,
@@ -39,7 +40,7 @@ public class GenericLight extends Block implements ITileEntityProvider {
     public static PropertyBool LIT = PropertyBool.create("lit");
 
     public GenericLight(String name, Class<? extends TileEntity> c) {
-        super(Material.PORTAL);
+        super(RFLux.instance, Material.PORTAL, c, false);
         setHardness(0.0f);
         setUnlocalizedName(RFLux.MODID + "." + name);
         setRegistryName(name);
@@ -53,6 +54,11 @@ public class GenericLight extends Block implements ITileEntityProvider {
     @SideOnly(Side.CLIENT)
     public void initModel() {
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+    }
+
+    @Override
+    public int getGuiID() {
+        return -1;
     }
 
     @Override

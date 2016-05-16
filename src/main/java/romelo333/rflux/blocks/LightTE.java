@@ -1,19 +1,14 @@
 package romelo333.rflux.blocks;
 
-import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyReceiver;
+import mcjty.lib.entity.GenericEnergyReceiverTileEntity;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 
-public class LightTE extends TileEntity implements IEnergyReceiver, ITickable {
+public class LightTE extends GenericEnergyReceiverTileEntity implements ITickable {
 
-    private EnergyStorage storage = new EnergyStorage(1000);
+    public LightTE() {
+        super(10000, 100);
+    }
 
     @Override
     public boolean shouldRenderInPass(int pass) {
@@ -32,37 +27,4 @@ public class LightTE extends TileEntity implements IEnergyReceiver, ITickable {
             }
         }
     }
-
-    @Override
-    public int getEnergyStored(EnumFacing from) {
-        return storage.getEnergyStored();
-    }
-
-    @Override
-    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate) {
-        return storage.receiveEnergy(maxReceive, simulate);
-    }
-
-    @Override
-    public int getMaxEnergyStored(EnumFacing from) {
-        return 1000;
-    }
-
-    @Override
-    public boolean canConnectEnergy(EnumFacing from) {
-        return true;
-    }
-
-    @Override
-    public Packet getDescriptionPacket() {
-        NBTTagCompound nbtTag = new NBTTagCompound();
-        this.writeToNBT(nbtTag);
-        return new SPacketUpdateTileEntity(getPos(), 1, nbtTag);
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
-        readFromNBT(packet.getNbtCompound());
-    }
-
 }

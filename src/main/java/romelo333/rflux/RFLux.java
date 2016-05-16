@@ -1,6 +1,8 @@
 package romelo333.rflux;
 
+import mcjty.lib.base.ModBase;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
@@ -19,7 +21,7 @@ import java.io.File;
 @Mod(modid = RFLux.MODID, name="RF Lux", dependencies =
         "required-after:Forge@["+ RFLux.MIN_FORGE_VER+",)",
         version = RFLux.VERSION)
-public class RFLux {
+public class RFLux implements ModBase {
     public static final String MODID = "rflux";
     public static final String VERSION = "0.0.1";
     public static final String MIN_FORGE_VER = "11.15.0.1600";
@@ -71,5 +73,15 @@ public class RFLux {
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent e) {
         proxy.postInit(e);
+    }
+
+    @Override
+    public String getModId() {
+        return MODID;
+    }
+
+    @Override
+    public void openManual(EntityPlayer entityPlayer, int i, String s) {
+
     }
 }
