@@ -3,8 +3,7 @@ package romelo333.rflux.blocks;
 
 import mcjty.lib.container.EmptyContainer;
 import mcjty.lib.container.GenericBlock;
-import mcjty.lib.container.GenericGuiContainer;
-import mcjty.lib.varia.Logging;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -13,7 +12,6 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
@@ -25,8 +23,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import romelo333.rflux.RFLux;
-
-import java.lang.reflect.Constructor;
 
 public class GenericLight extends GenericBlock {
     public static enum PlacementType {
@@ -40,12 +36,11 @@ public class GenericLight extends GenericBlock {
     public static PropertyBool LIT = PropertyBool.create("lit");
 
     public GenericLight(String name, Class<? extends TileEntity> c) {
-        super(RFLux.instance, Material.PORTAL, c, false);
-        setHardness(0.0f);
+        super(RFLux.instance, Material.IRON, c, false);
         setUnlocalizedName(RFLux.MODID + "." + name);
         setRegistryName(name);
         setCreativeTab(RFLux.tabRFLux);
-        setSoundType(SoundType.CLOTH);
+        setSoundType(SoundType.GLASS);
         GameRegistry.register(this);
         GameRegistry.register(new ItemBlock(this), getRegistryName());
         GameRegistry.registerTileEntity(c, RFLux.MODID + "_" + name);
@@ -78,6 +73,11 @@ public class GenericLight extends GenericBlock {
         } else {
             return 0;
         }
+    }
+
+    @Override
+    public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock) {
+        checkRedstoneWithTE(world, pos);
     }
 
     @Override

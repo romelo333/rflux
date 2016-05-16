@@ -6,8 +6,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-import java.util.Random;
-
 public class LightBlock extends GenericLight {
 
     public LightBlock() {
@@ -17,11 +15,6 @@ public class LightBlock extends GenericLight {
     @Override
     public boolean hasNoRotation() {
         return true;
-    }
-
-    @Override
-    public int quantityDropped(Random rnd) {
-        return 0;
     }
 
     @Override

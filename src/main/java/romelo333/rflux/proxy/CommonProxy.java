@@ -6,14 +6,16 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.apache.logging.log4j.Level;
 import romelo333.rflux.*;
-import romelo333.rflux.network.PacketHandler;
 import romelo333.rflux.varia.WrenchChecker;
 
 public abstract class CommonProxy {
 
     private Configuration mainConfig;
+
+    public static SimpleNetworkWrapper network;
 
     public void preInit(FMLPreInitializationEvent e) {
         mainConfig = RFLux.config;
@@ -21,14 +23,15 @@ public abstract class CommonProxy {
         ModBlocks.init();
         readMainConfig();
         ModCrafting.init();
-        PacketHandler.registerMessages("rflux");
+
+        network = mcjty.lib.network.PacketHandler.registerMessages(RFLux.MODID, "rflux");
     }
 
     private void readMainConfig() {
         Configuration cfg = mainConfig;
         try {
             cfg.load();
-//            cfg.addCustomCategoryComment(Config.CATEGORY_WANDS, "Wand configuration");
+            cfg.addCustomCategoryComment(Config.POWER_CATEGORY, "Power configuration");
             Config.init(cfg);
         } catch (Exception e1) {
             RFLux.logger.log(Level.ERROR, "Problem loading config file!", e1);
