@@ -4,17 +4,16 @@ import mcjty.lib.container.EmptyContainer;
 import mcjty.lib.container.GenericGuiContainer;
 import mcjty.lib.entity.GenericEnergyStorageTileEntity;
 import mcjty.lib.gui.layout.HorizontalLayout;
-import mcjty.lib.gui.layout.PositionalLayout;
 import mcjty.lib.gui.layout.VerticalLayout;
 import mcjty.lib.gui.widgets.*;
 import mcjty.lib.gui.widgets.Panel;
 import mcjty.lib.network.Argument;
+import mcjty.lib.varia.RedstoneMode;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import romelo333.rflux.Config;
 import romelo333.rflux.RFLux;
 import romelo333.rflux.proxy.CommonProxy;
-import romelo333.rflux.varia.RedstoneMode;
 
 import java.awt.*;
 
@@ -65,7 +64,7 @@ public class GuiLight extends GenericGuiContainer<LightTE> {
     }
 
     private void changeMode() {
-        tileEntity.setRedstoneMode(RedstoneMode.values()[redstoneMode.getCurrentChoiceIndex()]);
+        tileEntity.setRSMode(RedstoneMode.values()[redstoneMode.getCurrentChoiceIndex()]);
         sendChangeToServer();
     }
 
@@ -76,11 +75,11 @@ public class GuiLight extends GenericGuiContainer<LightTE> {
                 .addChoice(RedstoneMode.REDSTONE_OFFREQUIRED.getDescription(), "Redstone mode:\nOff to activate", iconGuiElements, 16, 0)
                 .addChoice(RedstoneMode.REDSTONE_ONREQUIRED.getDescription(), "Redstone mode:\nOn to activate", iconGuiElements, 32, 0);
         redstoneMode.setDesiredWidth(16).setDesiredHeight(16);
-        redstoneMode.setCurrentChoice(tileEntity.getRedstoneMode().ordinal());
+        redstoneMode.setCurrentChoice(tileEntity.getRSMode().ordinal());
     }
 
     private void changeRedstoneMode() {
-        tileEntity.setRedstoneMode(RedstoneMode.values()[redstoneMode.getCurrentChoiceIndex()]);
+        tileEntity.setRSMode(RedstoneMode.values()[redstoneMode.getCurrentChoiceIndex()]);
         sendChangeToServer();
     }
 

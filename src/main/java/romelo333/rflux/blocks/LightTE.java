@@ -2,12 +2,15 @@ package romelo333.rflux.blocks;
 
 import mcjty.lib.entity.GenericEnergyReceiverTileEntity;
 import mcjty.lib.network.Argument;
+import mcjty.lib.varia.RedstoneMode;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.EnumSkyBlock;
+import net.minecraft.world.chunk.Chunk;
 import romelo333.rflux.Config;
-import romelo333.rflux.varia.RedstoneMode;
 
 import java.util.Map;
 
@@ -17,33 +20,21 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
 
     public static final String CMD_MODE = "mode";
 
-    private RedstoneMode redstoneMode = RedstoneMode.REDSTONE_IGNORED;
     private int mode = 0;
-    private boolean powered;
+
+    @Override
+    protected boolean needsRedstoneMode() {
+        return true;
+    }
 
     public LightTE() {
         super(Config.LIGHTBLOCK_MAXRF, Config.LIGHTBLOCK_RECEIVEPERTICK);
     }
 
     @Override
-    public void setPowered(int powered) {
-        this.powered = powered > 0;
-        markDirty();
-    }
-
-    @Override
     public void update() {
         if (!worldObj.isRemote) {
-            boolean lit = true;
-
-            if (redstoneMode != RedstoneMode.REDSTONE_IGNORED) {
-                boolean rs = powered;
-                if (redstoneMode == RedstoneMode.REDSTONE_OFFREQUIRED && rs) {
-                    lit = false;
-                } else if (redstoneMode == RedstoneMode.REDSTONE_ONREQUIRED && !rs) {
-                    lit = false;
-                }
-            }
+            boolean lit = isMachineEnabled();
 
             IBlockState state = worldObj.getBlockState(getPos());
 
@@ -60,17 +51,34 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
             boolean old = state.getValue(LIT);
             if (old != lit) {
                 worldObj.setBlockState(getPos(), state.withProperty(LIT, lit), 3);
+
+                if (lit) {
+                    System.out.println("ON: lit = " + lit);
+                    for (int x = -30 ; x <= 30 ; x++) {
+                        for (int y = -30; y <= 30; y++) {
+                            for (int z = -30; z <= 30; z++) {
+                                BlockPos p = getPos().add(x, y, z);
+                                Chunk chunk = worldObj.getChunkFromBlockCoords(p);
+                                chunk.setLightFor(EnumSkyBlock.BLOCK, p, 15);
+                                worldObj.notifyLightSet(p);
+                            }
+                        }
+                    }
+                } else {
+                    System.out.println("OFF: lit = " + lit);
+                    for (int x = -30 ; x <= 30 ; x++) {
+                        for (int y = -30; y <= 30; y++) {
+                            for (int z = -30; z <= 30; z++) {
+                                BlockPos p = getPos().add(x, y, z);
+                                Chunk chunk = worldObj.getChunkFromBlockCoords(p);
+                                chunk.setLightFor(EnumSkyBlock.BLOCK, p, 0);
+                                worldObj.notifyLightSet(p);
+                            }
+                        }
+                    }
+                }
             }
         }
-    }
-
-    public RedstoneMode getRedstoneMode() {
-        return redstoneMode;
-    }
-
-    public void setRedstoneMode(RedstoneMode redstoneMode) {
-        this.redstoneMode = redstoneMode;
-        markDirtyClient();
     }
 
     public void setMode(int mode) {
@@ -83,29 +91,14 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tagCompound) {
-        super.readFromNBT(tagCompound);
-        powered = tagCompound.getBoolean("powered");
-    }
-
-    @Override
-    public void writeToNBT(NBTTagCompound tagCompound) {
-        super.writeToNBT(tagCompound);
-        tagCompound.setBoolean("powered", powered);
-    }
-
-    @Override
     public void readRestorableFromNBT(NBTTagCompound tagCompound) {
         super.readRestorableFromNBT(tagCompound);
-        int m = tagCompound.getByte("rsMode");
-        redstoneMode = RedstoneMode.values()[m];
         mode = tagCompound.getByte("mode");
     }
 
     @Override
     public void writeRestorableToNBT(NBTTagCompound tagCompound) {
         super.writeRestorableToNBT(tagCompound);
-        tagCompound.setByte("rsMode", (byte) redstoneMode.ordinal());
         tagCompound.setByte("mode", (byte) mode);
     }
 
@@ -117,7 +110,7 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
         }
         if (CMD_MODE.equals(command)) {
             String m = args.get("rs").getString();
-            setRedstoneMode(RedstoneMode.getMode(m));
+            setRSMode(RedstoneMode.getMode(m));
             setMode(args.get("mode").getInteger());
             return true;
         }

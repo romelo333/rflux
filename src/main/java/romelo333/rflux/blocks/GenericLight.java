@@ -3,25 +3,15 @@ package romelo333.rflux.blocks;
 
 import mcjty.lib.container.EmptyContainer;
 import mcjty.lib.container.GenericBlock;
-import net.minecraft.block.Block;
+import mcjty.lib.container.GenericGuiContainer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import romelo333.rflux.RFLux;
 
 public class GenericLight extends GenericBlock {
@@ -33,27 +23,27 @@ public class GenericLight extends GenericBlock {
         FLOOR
     }
 
+    @Override
+    public boolean needsRedstoneCheck() {
+        return true;
+    }
+
     public static PropertyBool LIT = PropertyBool.create("lit");
 
     public GenericLight(String name, Class<? extends TileEntity> c) {
-        super(RFLux.instance, Material.IRON, c, false);
-        setUnlocalizedName(RFLux.MODID + "." + name);
-        setRegistryName(name);
+        super(RFLux.instance, Material.IRON, c, EmptyContainer.class, name, false);
         setCreativeTab(RFLux.tabRFLux);
         setSoundType(SoundType.GLASS);
-        GameRegistry.register(this);
-        GameRegistry.register(new ItemBlock(this), getRegistryName());
-        GameRegistry.registerTileEntity(c, RFLux.MODID + "_" + name);
-    }
-
-    @SideOnly(Side.CLIENT)
-    public void initModel() {
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     }
 
     @Override
     public int getGuiID() {
         return RFLux.GUI_LIGHT;
+    }
+
+    @Override
+    public Class<? extends GenericGuiContainer> getGuiClass() {
+        return GuiLight.class;
     }
 
     @Override
@@ -75,21 +65,6 @@ public class GenericLight extends GenericBlock {
         }
     }
 
-    @Override
-    public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock) {
-        checkRedstoneWithTE(world, pos);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public GuiContainer createClientGui(EntityPlayer entityPlayer, TileEntity tileEntity) {
-        return new GuiLight((LightTE)tileEntity, new EmptyContainer(entityPlayer));
-    }
-
-    @Override
-    public Container createServerContainer(EntityPlayer entityPlayer, TileEntity tileEntity) {
-        return new EmptyContainer(entityPlayer);
-    }
 
 
 //    @Override
