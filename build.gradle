@@ -46,17 +46,17 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 minecraft {
-    version = "1.9.4-12.17.0.1950"
+    version = "1.10.2-12.18.1.2043"
     runDir = "run"
-    mappings = "snapshot_20160604"
+    mappings = "snapshot_20160730"
     useDepAts = true
 }
 
 dependencies {
     deobfCompile "mcp.mobius.waila:Waila:1.7.0-B3_1.9.4"
-    deobfCompile "mezz.jei:jei_1.9.4:3.4.0.202"
-    deobfCompile "mcjty.theoneprobe:TheOneProbe:1.9.4-1.0.10-23"
-    deobfCompile "com.github.mcjty:mcjtylib:1.9.4-1.9.1-SNAPSHOT"
+    deobfCompile "mezz.jei:jei_1.10.2:3.7.3.223"
+    deobfCompile "mcjty.theoneprobe:TheOneProbe:1.10-1.0.13-26"
+    deobfCompile "com.github.mcjty:mcjtylib:1.10-1.9.9-SNAPSHOT"
 }
 
 processResources
