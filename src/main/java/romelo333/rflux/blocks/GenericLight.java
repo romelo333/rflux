@@ -6,11 +6,7 @@ import mcjty.lib.container.GenericBlock;
 import mcjty.lib.container.GenericGuiContainer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import romelo333.rflux.RFLux;
 
@@ -27,8 +23,6 @@ public class GenericLight extends GenericBlock {
     public boolean needsRedstoneCheck() {
         return true;
     }
-
-    public static PropertyBool LIT = PropertyBool.create("lit");
 
     public GenericLight(String name, Class<? extends TileEntity> c) {
         super(RFLux.instance, Material.IRON, c, EmptyContainer.class, name, false);
@@ -51,19 +45,23 @@ public class GenericLight extends GenericBlock {
         return null;
     }
 
-    @Override
-    public int getLightValue(IBlockState state) {
-        return 15;
-    }
-
-    @Override
-    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-        if (state.getValue(LIT)) {
-            return getLightValue(state);
-        } else {
-            return 0;
-        }
-    }
+//    @Override
+//    public int getLightValue(IBlockState state) {
+//        return 15;
+//    }
+//
+//    @Override
+//    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+//        System.out.println("GenericLight.getLightValue: 1");
+//        TileEntity te = world.getTileEntity(pos);
+//        if (te instanceof LightTE) {
+//            if (((LightTE) te).isLit()) {
+//                System.out.println("GenericLight.getLightValue: 2");
+//                return 15;
+//            }
+//        }
+//        return 0;
+//    }
 
 
 

@@ -56,11 +56,17 @@ public class GuiLight extends GenericGuiContainer<LightTE> {
     }
 
     private void initMode() {
-        mode = new ChoiceLabel(mc, this).addChoices("Normal mode", "Extended mode")
+        mode = new ChoiceLabel(mc, this).addChoices("Normal mode", "Extended mode", "Super mode")
                 .setDesiredWidth(130)
                 .addChoiceEvent((parent, newChoice) -> changeMode());
         mode.setChoiceTooltip("Normal mode", "Same light value as a glowstone", "block (" + Config.LIGHTBLOCK_RFPERTICK_L0 + " RF/tick)");
-        mode.setChoiceTooltip("Extended mode", "Light in a radius of 30", "blocks (" + Config.LIGHTBLOCK_RFPERTICK_L1 + " RF/tick)");
+        mode.setChoiceTooltip("Extended mode", "Light up a bigger area", "blocks (" + Config.LIGHTBLOCK_RFPERTICK_L1 + " RF/tick)");
+        mode.setChoiceTooltip("Super mode", "Light up the largest area", "blocks (" + Config.LIGHTBLOCK_RFPERTICK_L2 + " RF/tick)");
+        switch (tileEntity.getMode()) {
+            case 0: mode.setChoice("Normal mode"); break;
+            case 1: mode.setChoice("Extended mode"); break;
+            case 2: mode.setChoice("Super mode"); break;
+        }
     }
 
     private void changeMode() {
@@ -84,9 +90,10 @@ public class GuiLight extends GenericGuiContainer<LightTE> {
     }
 
     private void sendChangeToServer() {
+        String choice = mode.getCurrentChoice();
         sendServerCommand(CommonProxy.network, LightTE.CMD_MODE,
                 new Argument("rs", RedstoneMode.values()[redstoneMode.getCurrentChoiceIndex()].getDescription()),
-                new Argument("mode", mode.getCurrentChoice().equals("Normal mode") ? 0 : 1));
+                new Argument("mode", choice.equals("Normal mode") ? 0 : (choice.equals("Extended mode") ? 1 : 2)));
     }
 
 
