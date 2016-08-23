@@ -4,11 +4,22 @@ package romelo333.rflux.blocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import romelo333.rflux.ModBlocks;
 
-public class LightBlock extends GenericLight {
+public class LightBlock extends GenericLightBlock {
 
-    public LightBlock() {
-        super("lightblock", LightTE.class);
+    public LightBlock(boolean onOff) {
+        super("lightblock_" + (onOff ? "on" : "off"), LightTE.class, onOff);
+    }
+
+    @Override
+    public GenericLightBlock getLitBlock() {
+        return ModBlocks.lightBlockOn;
+    }
+
+    @Override
+    public GenericLightBlock getUnlitBlock() {
+        return ModBlocks.lightBlockOff;
     }
 
     @Override

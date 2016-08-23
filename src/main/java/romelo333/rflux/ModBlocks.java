@@ -7,17 +7,20 @@ import romelo333.rflux.blocks.InvisibleLightBlock;
 import romelo333.rflux.blocks.LightBlock;
 
 public class ModBlocks {
-    public static LightBlock lightBlock;
+    public static LightBlock lightBlockOn;
+    public static LightBlock lightBlockOff;
     public static InvisibleLightBlock invisibleLightBlock;
 
     public static void init() {
-        lightBlock = new LightBlock();
+        lightBlockOn = new LightBlock(true);
+        lightBlockOff = new LightBlock(false);
         invisibleLightBlock = new InvisibleLightBlock();
     }
 
     @SideOnly(Side.CLIENT)
     public static void initModels() {
-        lightBlock.initModel();
+        lightBlockOn.initModel();
+        lightBlockOff.initModel();
         invisibleLightBlock.initModel();
     }
 }

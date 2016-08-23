@@ -21,7 +21,7 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
 
     private boolean lit = false;
 
-    private int mode = 0;
+    private LightMode mode = LightMode.MODE_NORMAL;
     private int checkLitCounter = 10;
 
     @Override
@@ -37,21 +37,6 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
         return lit;
     }
 
-//    @Override
-//    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
-//        boolean oldlit = lit;
-//
-//        super.onDataPacket(net, packet);
-//
-//        if (worldObj.isRemote) {
-//            // If needed send a render update.
-//            if (lit != oldlit) {
-//                worldObj.markBlockRangeForRenderUpdate(getPos(), getPos());
-//            }
-//        }
-//    }
-//
-
     @Override
     public void update() {
         if (!worldObj.isRemote) {
@@ -59,7 +44,7 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
 
             if (newlit) {
                 // We are still potentially lit so do this.
-                int rf = mode == 2 ? Config.LIGHTBLOCK_RFPERTICK_L2 : (mode == 1 ? Config.LIGHTBLOCK_RFPERTICK_L1 : Config.LIGHTBLOCK_RFPERTICK_L0);
+                int rf = mode.getRfUsage();
                 if (storage.getEnergyStored() >= rf) {
                     storage.extractEnergy(rf, false);
                 } else {
@@ -70,7 +55,18 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
             if (newlit != lit) {
                 // State has changed so we must update.
                 lit = newlit;
-                markDirty();
+                GenericLightBlock block = (GenericLightBlock) worldObj.getBlockState(pos).getBlock();
+                if (lit) {
+                    worldObj.setBlockState(pos, block.getLitBlock().getDefaultState(), 3);
+                } else {
+                    worldObj.setBlockState(pos, block.getUnlitBlock().getDefaultState(), 3);
+                }
+
+                // Restore the TE, needed since our block has changed
+                this.validate();
+                worldObj.setTileEntity(pos, this);
+
+                markDirtyClient();
                 updateLightBlocks(lit);
             } else if (lit) {
                 // We are lit, check that our blocks are still there.
@@ -85,37 +81,40 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
 
     private void updateLightBlocks(boolean lit) {
         BlockPos.MutableBlockPos lpos = new BlockPos.MutableBlockPos();
-        int range = mode == 0 ? 1 : mode == 1 ? 3 : 4;
-        for (int x = -range; x <= range; x += range) {
-            for (int y = -range; y <= range; y += range) {
-                for (int z = -range; z <= range; z += range) {
-                    if (x != 0 || y != 0 || z != 0) {
-                        if (lit) {
-                            lpos.setPos(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
-                            if (worldObj.getBlockState(lpos).getBlock() != ModBlocks.invisibleLightBlock) {
-                                if (worldObj.isAirBlock(lpos)) {
-                                    // This is not a light block but it is air. We can place a block
-                                    worldObj.setBlockState(lpos, ModBlocks.invisibleLightBlock.getDefaultState(), 3);
-                                } else {
-                                    // Not a light block and not air. Check adjacent locations
-                                    for (EnumFacing facing : EnumFacing.VALUES) {
-                                        BlockPos npos = lpos.offset(facing);
-                                        if (worldObj.getBlockState(npos).getBlock() != ModBlocks.invisibleLightBlock && worldObj.isAirBlock(npos)) {
-                                            worldObj.setBlockState(npos, ModBlocks.invisibleLightBlock.getDefaultState(), 3);
+        int range = mode.getRange();
+        if (range == 0) {
+            return;
+        } else {
+            for (int x = -range; x <= range; x += range) {
+                for (int y = -range; y <= range; y += range) {
+                    for (int z = -range; z <= range; z += range) {
+                        if (x != 0 || y != 0 || z != 0) {
+                            if (lit) {
+                                lpos.setPos(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
+                                if (!isInvisibleLight(lpos)) {
+                                    if (worldObj.isAirBlock(lpos)) {
+                                        // This is not a light block but it is air. We can place a block
+                                        setInvisibleBlock(lpos);
+                                    } else {
+                                        // Not a light block and not air. Check adjacent locations
+                                        for (EnumFacing facing : EnumFacing.VALUES) {
+                                            BlockPos npos = lpos.offset(facing);
+                                            if (!isInvisibleLight(npos) && worldObj.isAirBlock(npos)) {
+                                                setInvisibleBlock(npos);
+                                            }
                                         }
                                     }
-
                                 }
-                            }
-                        } else {
-                            lpos.setPos(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
-                            if (worldObj.getBlockState(lpos).getBlock() == ModBlocks.invisibleLightBlock) {
-                                worldObj.setBlockToAir(lpos);
-                            }
-                            for (EnumFacing facing : EnumFacing.VALUES) {
-                                BlockPos npos = lpos.offset(facing);
-                                if (worldObj.getBlockState(npos).getBlock() == ModBlocks.invisibleLightBlock) {
-                                    worldObj.setBlockToAir(npos);
+                            } else {
+                                lpos.setPos(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
+                                if (isInvisibleLight(lpos)) {
+                                    worldObj.setBlockToAir(lpos);
+                                }
+                                for (EnumFacing facing : EnumFacing.VALUES) {
+                                    BlockPos npos = lpos.offset(facing);
+                                    if (isInvisibleLight(npos)) {
+                                        worldObj.setBlockToAir(npos);
+                                    }
                                 }
                             }
                         }
@@ -125,12 +124,20 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
         }
     }
 
+    private boolean setInvisibleBlock(BlockPos npos) {
+        return worldObj.setBlockState(npos, ModBlocks.invisibleLightBlock.getDefaultState(), 3);
+    }
+
+    private boolean isInvisibleLight(BlockPos lpos) {
+        return worldObj.getBlockState(lpos).getBlock() == ModBlocks.invisibleLightBlock;
+    }
+
     @Override
     public void onBlockBreak(World workd, BlockPos pos, IBlockState state) {
         updateLightBlocks(false);
     }
 
-    public void setMode(int mode) {
+    public void setMode(LightMode mode) {
         if (mode == this.mode) {
             return;
         }
@@ -140,7 +147,7 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
         markDirty();
     }
 
-    public int getMode() {
+    public LightMode getMode() {
         return mode;
     }
 
@@ -160,13 +167,13 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
     @Override
     public void readRestorableFromNBT(NBTTagCompound tagCompound) {
         super.readRestorableFromNBT(tagCompound);
-        mode = tagCompound.getByte("mode");
+        mode = LightMode.values()[tagCompound.getByte("mode")];
     }
 
     @Override
     public void writeRestorableToNBT(NBTTagCompound tagCompound) {
         super.writeRestorableToNBT(tagCompound);
-        tagCompound.setByte("mode", (byte) mode);
+        tagCompound.setByte("mode", (byte) mode.ordinal());
     }
 
     @Override
@@ -178,7 +185,7 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
         if (CMD_MODE.equals(command)) {
             String m = args.get("rs").getString();
             setRSMode(RedstoneMode.getMode(m));
-            setMode(args.get("mode").getInteger());
+            setMode(LightMode.values()[args.get("mode").getInteger()]);
             return true;
         }
         return false;

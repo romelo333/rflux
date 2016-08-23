@@ -1,1 +1,2 @@
-tile.rflux.lightblock.name=Light Block
+tile.rflux.lightblock_on.name=Light Block (on)
+tile.rflux.lightblock_off.name=Light Block (off)

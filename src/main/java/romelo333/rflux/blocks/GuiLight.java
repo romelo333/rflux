@@ -56,17 +56,13 @@ public class GuiLight extends GenericGuiContainer<LightTE> {
     }
 
     private void initMode() {
-        mode = new ChoiceLabel(mc, this).addChoices("Normal mode", "Extended mode", "Super mode")
+        mode = new ChoiceLabel(mc, this).addChoices(LightMode.MODE_NORMAL.getName(), LightMode.MODE_EXTENDED.getName(), LightMode.MODE_SUPER.getName())
                 .setDesiredWidth(130)
                 .addChoiceEvent((parent, newChoice) -> changeMode());
-        mode.setChoiceTooltip("Normal mode", "Same light value as a glowstone", "block (" + Config.LIGHTBLOCK_RFPERTICK_L0 + " RF/tick)");
-        mode.setChoiceTooltip("Extended mode", "Light up a bigger area", "blocks (" + Config.LIGHTBLOCK_RFPERTICK_L1 + " RF/tick)");
-        mode.setChoiceTooltip("Super mode", "Light up the largest area", "blocks (" + Config.LIGHTBLOCK_RFPERTICK_L2 + " RF/tick)");
-        switch (tileEntity.getMode()) {
-            case 0: mode.setChoice("Normal mode"); break;
-            case 1: mode.setChoice("Extended mode"); break;
-            case 2: mode.setChoice("Super mode"); break;
-        }
+        mode.setChoiceTooltip(LightMode.MODE_NORMAL.getName(), "Same light value as a glowstone", "block (" + Config.LIGHTBLOCK_RFPERTICK_L0 + " RF/tick)");
+        mode.setChoiceTooltip(LightMode.MODE_EXTENDED.getName(), "Light up a bigger area", "blocks (" + Config.LIGHTBLOCK_RFPERTICK_L1 + " RF/tick)");
+        mode.setChoiceTooltip(LightMode.MODE_SUPER.getName(), "Light up the largest area", "blocks (" + Config.LIGHTBLOCK_RFPERTICK_L2 + " RF/tick)");
+        mode.setChoice(tileEntity.getMode().getName());
     }
 
     private void changeMode() {
@@ -91,9 +87,10 @@ public class GuiLight extends GenericGuiContainer<LightTE> {
 
     private void sendChangeToServer() {
         String choice = mode.getCurrentChoice();
+        LightMode lightMode = LightMode.getModeByName(choice);
         sendServerCommand(CommonProxy.network, LightTE.CMD_MODE,
                 new Argument("rs", RedstoneMode.values()[redstoneMode.getCurrentChoiceIndex()].getDescription()),
-                new Argument("mode", choice.equals("Normal mode") ? 0 : (choice.equals("Extended mode") ? 1 : 2)));
+                new Argument("mode", lightMode.ordinal()));
     }
 
 
