@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModCrafting {
     public static void init() {
-        GameRegistry.addRecipe(new ItemStack(ModBlocks.lightBlockOff), "rgr", "gBg", "rgr", 'r', Items.REDSTONE, 'g', Items.GLOWSTONE_DUST, 'B', Blocks.GLASS);
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.lightBlockOff), "rgr", "gBg", "rgr", 'r', Items.REDSTONE, 'g', Blocks.GLOWSTONE, 'B', Blocks.GLASS);
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.flatLightBlockOff, 3), "bbb", 'b', ModBlocks.lightBlockOff);
     }
 }

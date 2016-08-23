@@ -58,6 +58,7 @@ public class GuiLight extends GenericGuiContainer<LightTE> {
     private void initMode() {
         mode = new ChoiceLabel(mc, this).addChoices(LightMode.MODE_NORMAL.getName(), LightMode.MODE_EXTENDED.getName(), LightMode.MODE_SUPER.getName())
                 .setDesiredWidth(130)
+                .setDesiredHeight(15)
                 .addChoiceEvent((parent, newChoice) -> changeMode());
         mode.setChoiceTooltip(LightMode.MODE_NORMAL.getName(), "Same light value as a glowstone", "block (" + Config.LIGHTBLOCK_RFPERTICK_L0 + " RF/tick)");
         mode.setChoiceTooltip(LightMode.MODE_EXTENDED.getName(), "Light up a bigger area", "blocks (" + Config.LIGHTBLOCK_RFPERTICK_L1 + " RF/tick)");

@@ -1,5 +1,6 @@
 package romelo333.rflux.blocks;
 
+import mcjty.lib.container.GenericBlock;
 import mcjty.lib.entity.GenericEnergyReceiverTileEntity;
 import mcjty.lib.network.Argument;
 import mcjty.lib.varia.RedstoneMode;
@@ -55,11 +56,20 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
             if (newlit != lit) {
                 // State has changed so we must update.
                 lit = newlit;
-                GenericLightBlock block = (GenericLightBlock) worldObj.getBlockState(pos).getBlock();
-                if (lit) {
-                    worldObj.setBlockState(pos, block.getLitBlock().getDefaultState(), 3);
+                IBlockState oldState = worldObj.getBlockState(pos);
+                GenericLightBlock block = (GenericLightBlock) oldState.getBlock();
+                if (block.hasNoRotation()) {
+                    if (lit) {
+                        worldObj.setBlockState(pos, block.getLitBlock().getDefaultState(), 3);
+                    } else {
+                        worldObj.setBlockState(pos, block.getUnlitBlock().getDefaultState(), 3);
+                    }
                 } else {
-                    worldObj.setBlockState(pos, block.getUnlitBlock().getDefaultState(), 3);
+                    if (lit) {
+                        worldObj.setBlockState(pos, block.getLitBlock().getDefaultState().withProperty(GenericBlock.FACING, oldState.getValue(GenericBlock.FACING)), 3);
+                    } else {
+                        worldObj.setBlockState(pos, block.getUnlitBlock().getDefaultState().withProperty(GenericBlock.FACING, oldState.getValue(GenericBlock.FACING)), 3);
+                    }
                 }
 
                 // Restore the TE, needed since our block has changed
@@ -141,9 +151,11 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
         if (mode == this.mode) {
             return;
         }
-        lit = false;    // Force a relight
+        boolean oldlit = lit;
+        this.lit = false;    // Force a relight
         updateLightBlocks(lit);
         this.mode = mode;
+        this.lit = oldlit;
         markDirty();
     }
 
