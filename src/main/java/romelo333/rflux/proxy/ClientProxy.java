@@ -1,13 +1,15 @@
 package romelo333.rflux.proxy;
 
-import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import romelo333.rflux.*;
+import romelo333.rflux.KeyBindings;
+import romelo333.rflux.KeyInputHandler;
+import romelo333.rflux.ModBlocks;
+import romelo333.rflux.RFLux;
 
 public class ClientProxy extends CommonProxy {
 
@@ -23,6 +25,7 @@ public class ClientProxy extends CommonProxy {
         super.init(e);
         MinecraftForge.EVENT_BUS.register(this);
         FMLCommonHandler.instance().bus().register(new KeyInputHandler());
+        ModBlocks.initClientPost();
         KeyBindings.init();
     }
 

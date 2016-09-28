@@ -2,8 +2,6 @@ package romelo333.rflux.blocks;
 
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import romelo333.rflux.ModBlocks;
 
 public class FlatLightBlock extends GenericLightBlock {

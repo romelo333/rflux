@@ -1,7 +1,8 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "rflux:lightblock"
+    "model": "rflux:lightblock",
+    "textures": { "side": "rflux:blocks/white" }
   },
   "variants": {
     "normal": [{}],

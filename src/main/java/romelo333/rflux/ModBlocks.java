@@ -30,4 +30,10 @@ public class ModBlocks {
         flatLightBlockOff.initModel();
         invisibleLightBlock.initModel();
     }
+
+    @SideOnly(Side.CLIENT)
+    public static void initClientPost() {
+        lightBlockOn.initBlockColors();
+        lightBlockOff.initBlockColors();
+    }
 }
