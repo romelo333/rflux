@@ -22,7 +22,8 @@ import java.io.File;
 @Mod(modid = RFLux.MODID, name="RF Lux",
 //        dependencies =
 //        "required-after:Forge@["+ RFLux.MIN_FORGE_VER+",)",
-        version = RFLux.VERSION)
+        version = RFLux.VERSION,
+        acceptedMinecraftVersions = "[1.10,1.12)")
 public class RFLux implements ModBase {
     public static final String MODID = "rflux";
     public static final String VERSION = "0.0.1";
