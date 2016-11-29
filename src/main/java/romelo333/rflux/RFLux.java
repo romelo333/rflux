@@ -1,6 +1,7 @@
 package romelo333.rflux;
 
 import mcjty.lib.base.ModBase;
+import mcjty.lib.compat.CompatCreativeTabs;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -18,8 +19,9 @@ import romelo333.rflux.proxy.CommonProxy;
 
 import java.io.File;
 
-@Mod(modid = RFLux.MODID, name="RF Lux", dependencies =
-        "required-after:Forge@["+ RFLux.MIN_FORGE_VER+",)",
+@Mod(modid = RFLux.MODID, name="RF Lux",
+//        dependencies =
+//        "required-after:Forge@["+ RFLux.MIN_FORGE_VER+",)",
         version = RFLux.VERSION)
 public class RFLux implements ModBase {
     public static final String MODID = "rflux";
@@ -38,10 +40,9 @@ public class RFLux implements ModBase {
     public static final int GUI_LIGHT = 1;
 
 
-    public static CreativeTabs tabRFLux = new CreativeTabs("RFLux") {
+    public static CreativeTabs tabRFLux = new CompatCreativeTabs("RFLux") {
         @Override
-        @SideOnly(Side.CLIENT)
-        public Item getTabIconItem() {
+        protected Item getItem() {
             return Items.GLOWSTONE_DUST;
         }
     };

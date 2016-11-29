@@ -40,7 +40,7 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
 
     @Override
     public void update() {
-        if (!worldObj.isRemote) {
+        if (!getWorld().isRemote) {
             boolean newlit = isMachineEnabled();
 
             if (newlit) {
@@ -56,25 +56,25 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
             if (newlit != lit) {
                 // State has changed so we must update.
                 lit = newlit;
-                IBlockState oldState = worldObj.getBlockState(pos);
+                IBlockState oldState = getWorld().getBlockState(pos);
                 GenericLightBlock block = (GenericLightBlock) oldState.getBlock();
                 if (block.hasNoRotation()) {
                     if (lit) {
-                        worldObj.setBlockState(pos, block.getLitBlock().getDefaultState(), 3);
+                        getWorld().setBlockState(pos, block.getLitBlock().getDefaultState(), 3);
                     } else {
-                        worldObj.setBlockState(pos, block.getUnlitBlock().getDefaultState(), 3);
+                        getWorld().setBlockState(pos, block.getUnlitBlock().getDefaultState(), 3);
                     }
                 } else {
                     if (lit) {
-                        worldObj.setBlockState(pos, block.getLitBlock().getDefaultState().withProperty(GenericBlock.FACING, oldState.getValue(GenericBlock.FACING)), 3);
+                        getWorld().setBlockState(pos, block.getLitBlock().getDefaultState().withProperty(GenericBlock.FACING, oldState.getValue(GenericBlock.FACING)), 3);
                     } else {
-                        worldObj.setBlockState(pos, block.getUnlitBlock().getDefaultState().withProperty(GenericBlock.FACING, oldState.getValue(GenericBlock.FACING)), 3);
+                        getWorld().setBlockState(pos, block.getUnlitBlock().getDefaultState().withProperty(GenericBlock.FACING, oldState.getValue(GenericBlock.FACING)), 3);
                     }
                 }
 
                 // Restore the TE, needed since our block has changed
                 this.validate();
-                worldObj.setTileEntity(pos, this);
+                getWorld().setTileEntity(pos, this);
 
                 markDirtyClient();
                 updateLightBlocks(lit);
@@ -102,14 +102,14 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
                             if (lit) {
                                 lpos.setPos(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
                                 if (!isInvisibleLight(lpos)) {
-                                    if (worldObj.isAirBlock(lpos)) {
+                                    if (getWorld().isAirBlock(lpos)) {
                                         // This is not a light block but it is air. We can place a block
                                         setInvisibleBlock(lpos);
                                     } else {
                                         // Not a light block and not air. Check adjacent locations
                                         for (EnumFacing facing : EnumFacing.VALUES) {
                                             BlockPos npos = lpos.offset(facing);
-                                            if (!isInvisibleLight(npos) && worldObj.isAirBlock(npos)) {
+                                            if (!isInvisibleLight(npos) && getWorld().isAirBlock(npos)) {
                                                 setInvisibleBlock(npos);
                                             }
                                         }
@@ -118,12 +118,12 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
                             } else {
                                 lpos.setPos(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
                                 if (isInvisibleLight(lpos)) {
-                                    worldObj.setBlockToAir(lpos);
+                                    getWorld().setBlockToAir(lpos);
                                 }
                                 for (EnumFacing facing : EnumFacing.VALUES) {
                                     BlockPos npos = lpos.offset(facing);
                                     if (isInvisibleLight(npos)) {
-                                        worldObj.setBlockToAir(npos);
+                                        getWorld().setBlockToAir(npos);
                                     }
                                 }
                             }
@@ -135,11 +135,11 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
     }
 
     private boolean setInvisibleBlock(BlockPos npos) {
-        return worldObj.setBlockState(npos, ModBlocks.invisibleLightBlock.getDefaultState(), 3);
+        return getWorld().setBlockState(npos, ModBlocks.invisibleLightBlock.getDefaultState(), 3);
     }
 
     private boolean isInvisibleLight(BlockPos lpos) {
-        return worldObj.getBlockState(lpos).getBlock() == ModBlocks.invisibleLightBlock;
+        return getWorld().getBlockState(lpos).getBlock() == ModBlocks.invisibleLightBlock;
     }
 
     @Override

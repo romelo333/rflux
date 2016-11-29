@@ -48,11 +48,17 @@ public class InvisibleLightBlock extends Block {
         return true;
     }
 
+    // @todo @@@@@ CHECK iBlockAccess vs World
     @Nullable
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
         return null;
     }
+//    @Nullable
+//    @Override
+//    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
+//        return null;
+//    }
 
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {

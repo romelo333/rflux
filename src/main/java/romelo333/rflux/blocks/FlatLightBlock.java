@@ -6,8 +6,8 @@ import romelo333.rflux.ModBlocks;
 
 public class FlatLightBlock extends GenericLightBlock {
 
-    public FlatLightBlock(boolean onOff) {
-        super("flatlightblock_" + (onOff ? "on" : "off"), LightTE.class, FlatLightItemBlock.class, onOff);
+    public FlatLightBlock(boolean onOff, Class<? extends LightTE> clazz) {
+        super("flatlightblock_" + (onOff ? "on" : "off"), clazz, FlatLightItemBlock.class, onOff);
     }
 
     @Override

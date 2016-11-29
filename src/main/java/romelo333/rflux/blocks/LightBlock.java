@@ -18,8 +18,8 @@ import java.util.List;
 
 public class LightBlock extends GenericLightBlock {
 
-    public LightBlock(boolean onOff) {
-        super("lightblock_" + (onOff ? "on" : "off"), LightTE.class, onOff);
+    public LightBlock(boolean onOff, Class<? extends TileEntity> clazz) {
+        super("lightblock_" + (onOff ? "on" : "off"), clazz, onOff);
     }
 
     @SideOnly(Side.CLIENT)
@@ -41,8 +41,8 @@ public class LightBlock extends GenericLightBlock {
     }
 
     @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
-        super.getSubBlocks(itemIn, tab, list);
+    protected void clGetSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
+        super.clGetSubBlocks(itemIn, tab, subItems);
     }
 
     @Override

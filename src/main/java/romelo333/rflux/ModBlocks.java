@@ -3,9 +3,7 @@ package romelo333.rflux;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import romelo333.rflux.blocks.FlatLightBlock;
-import romelo333.rflux.blocks.InvisibleLightBlock;
-import romelo333.rflux.blocks.LightBlock;
+import romelo333.rflux.blocks.*;
 
 public class ModBlocks {
     public static LightBlock lightBlockOn;
@@ -15,10 +13,10 @@ public class ModBlocks {
     public static InvisibleLightBlock invisibleLightBlock;
 
     public static void init() {
-        lightBlockOn = new LightBlock(true);
-        lightBlockOff = new LightBlock(false);
-        flatLightBlockOn = new FlatLightBlock(true);
-        flatLightBlockOff = new FlatLightBlock(false);
+        lightBlockOn = new LightBlock(true, LightTE.class);
+        lightBlockOff = new LightBlock(false, LightTEOff.class);
+        flatLightBlockOn = new FlatLightBlock(true, LightTEFlatOn.class);
+        flatLightBlockOff = new FlatLightBlock(false, LightTEFlatOff.class);
         invisibleLightBlock = new InvisibleLightBlock();
     }
 

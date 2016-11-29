@@ -1,5 +1,8 @@
 package romelo333.rflux.varia;
 
+import mcjty.lib.tools.ChatTools;
+import mcjty.lib.tools.ItemStackTools;
+import mcjty.lib.tools.WorldTools;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,11 +20,11 @@ import net.minecraft.world.World;
 
 public class Tools {
     public static void error(EntityPlayer player, String msg) {
-        player.addChatComponentMessage(new TextComponentString(TextFormatting.RED + msg));
+        ChatTools.addChatMessage(player, new TextComponentString(TextFormatting.RED + msg));
     }
 
     public static void notify(EntityPlayer player, String msg) {
-        player.addChatComponentMessage(new TextComponentString(TextFormatting.GREEN + msg));
+        ChatTools.addChatMessage(player, new TextComponentString(TextFormatting.GREEN + msg));
     }
 
     public static boolean consumeInventoryItem(Item item, int meta, InventoryPlayer inv, EntityPlayer player) {
@@ -33,9 +36,12 @@ public class Tools {
         if (i < 0) {
             return false;
         } else {
-            if (--inv.mainInventory[i].stackSize <= 0) {
-                inv.mainInventory[i] = null;
-            }
+            // @todo @@@@@@
+            ItemStack newStack = ItemStackTools.incStackSize(inv.mainInventory.get(i), -1);
+            inv.mainInventory.set(i, newStack);
+//            if (--inv.mainInventory[i].stackSize <= 0) {
+//                inv.mainInventory[i] = null;
+//            }
 
             return true;
         }
@@ -46,16 +52,23 @@ public class Tools {
         if (!player.inventory.addItemStackToInventory(oldStack)) {
             // Not enough room. Spawn item in world.
             EntityItem entityItem = new EntityItem(world, x, y, z, oldStack);
-            world.spawnEntityInWorld(entityItem);
+            WorldTools.spawnEntity(world, entityItem);
         }
     }
 
     public static int finditem(Item item, int meta, InventoryPlayer inv) {
-        for (int i = 0; i < inv.mainInventory.length; ++i) {
-            if (inv.mainInventory[i] != null && inv.mainInventory[i].getItem() == item && meta == inv.mainInventory[i].getItemDamage()) {
+        // @todo @@@@@@@@@@
+        for (int i = 0; i < inv.mainInventory.size(); ++i) {
+            ItemStack stack = inv.mainInventory.get(i);
+            if (ItemStackTools.isValid(stack) && stack.getItem() == item && meta == stack.getItemDamage()) {
                 return i;
             }
         }
+//        for (int i = 0; i < inv.mainInventory.length; ++i) {
+//            if (inv.mainInventory[i] != null && inv.mainInventory[i].getItem() == item && meta == inv.mainInventory[i].getItemDamage()) {
+//                return i;
+//            }
+//        }
 
         return -1;
     }
