@@ -31,7 +31,7 @@ public class LightBlock extends GenericLightBlock {
                     TileEntity te = worldIn.getTileEntity(pos);
                     if (te instanceof LightTE) {
                         LightTE tileEntity = (LightTE) te;
-                        return 0xff0000;
+                        return 0xffffff;    // @todo
 //                        return tileEntity.getShieldColor();
                     }
                 }
