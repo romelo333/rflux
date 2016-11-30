@@ -48,7 +48,6 @@ public class InvisibleLightBlock extends Block {
         return true;
     }
 
-    // @todo @@@@@ CHECK iBlockAccess vs World
     @Nullable
     @Override
     public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {

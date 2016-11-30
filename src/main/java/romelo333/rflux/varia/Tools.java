@@ -1,14 +1,11 @@
 package romelo333.rflux.varia;
 
 import mcjty.lib.tools.ChatTools;
-import mcjty.lib.tools.ItemStackTools;
 import mcjty.lib.tools.WorldTools;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketSoundEffect;
@@ -27,26 +24,6 @@ public class Tools {
         ChatTools.addChatMessage(player, new TextComponentString(TextFormatting.GREEN + msg));
     }
 
-    public static boolean consumeInventoryItem(Item item, int meta, InventoryPlayer inv, EntityPlayer player) {
-        if (player.capabilities.isCreativeMode) {
-            return true;
-        }
-        int i = finditem(item, meta, inv);
-
-        if (i < 0) {
-            return false;
-        } else {
-            // @todo @@@@@@
-            ItemStack newStack = ItemStackTools.incStackSize(inv.mainInventory.get(i), -1);
-            inv.mainInventory.set(i, newStack);
-//            if (--inv.mainInventory[i].stackSize <= 0) {
-//                inv.mainInventory[i] = null;
-//            }
-
-            return true;
-        }
-    }
-
     public static void giveItem(World world, EntityPlayer player, Block block, int meta, int cnt, int x, int y, int z) {
         ItemStack oldStack = new ItemStack(block, cnt, meta);
         if (!player.inventory.addItemStackToInventory(oldStack)) {
@@ -54,23 +31,6 @@ public class Tools {
             EntityItem entityItem = new EntityItem(world, x, y, z, oldStack);
             WorldTools.spawnEntity(world, entityItem);
         }
-    }
-
-    public static int finditem(Item item, int meta, InventoryPlayer inv) {
-        // @todo @@@@@@@@@@
-        for (int i = 0; i < inv.mainInventory.size(); ++i) {
-            ItemStack stack = inv.mainInventory.get(i);
-            if (ItemStackTools.isValid(stack) && stack.getItem() == item && meta == stack.getItemDamage()) {
-                return i;
-            }
-        }
-//        for (int i = 0; i < inv.mainInventory.length; ++i) {
-//            if (inv.mainInventory[i] != null && inv.mainInventory[i].getItem() == item && meta == inv.mainInventory[i].getItemDamage()) {
-//                return i;
-//            }
-//        }
-
-        return -1;
     }
 
     public static NBTTagCompound getTagCompound(ItemStack stack) {
