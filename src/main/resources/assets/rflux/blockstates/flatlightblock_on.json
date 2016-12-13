@@ -2,7 +2,12 @@
   "forge_marker": 1,
   "defaults": {
     "custom": { "flip-v": true },
-    "model": "rflux:flatlight.obj"
+    "model": "rflux:flatlight.obj",
+    "transform" : {
+      "gui": {
+        "rotation": [{ "x": 10 }, { "y": -45 }, { "z": 170 }]
+      }
+    }
   },
   "variants": {
     "normal": [{}],
