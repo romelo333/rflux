@@ -30,9 +30,21 @@ public class GuiLight extends GenericGuiContainer<LightTE> {
 
     private int timer = 10;
 
-    public GuiLight(LightTE endergenicTileEntity, EmptyContainer container) {
-        super(RFLux.instance, CommonProxy.network, endergenicTileEntity, container, 0, "light block");
-        GenericEnergyStorageTileEntity.setCurrentRF(endergenicTileEntity.getEnergyStored(EnumFacing.DOWN));
+    public GuiLight(LightTEFlatOff te, EmptyContainer container) {
+        this((LightTE) te, container);
+    }
+
+    public GuiLight(LightTEFlatOn te, EmptyContainer container) {
+        this((LightTE) te, container);
+    }
+
+    public GuiLight(LightTEOff te, EmptyContainer container) {
+        this((LightTE) te, container);
+    }
+
+    public GuiLight(LightTE te, EmptyContainer container) {
+        super(RFLux.instance, CommonProxy.network, te, container, 0, "light block");
+        GenericEnergyStorageTileEntity.setCurrentRF(te.getEnergyStored(EnumFacing.DOWN));
         xSize = WIDTH;
         ySize = HEIGHT;
     }

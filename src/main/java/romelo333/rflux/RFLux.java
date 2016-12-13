@@ -30,8 +30,8 @@ public class RFLux implements ModBase {
     public static final String VERSION = "0.0.1";
     public static final String MIN_FORGE10_VER = "12.18.1.2082";
     public static final String MIN_FORGE11_VER = "13.19.0.2157";
-    public static final String MIN_MCJTYLIB_VER = "2.2.0alpha14";
-    public static final String COMPATLAYER_VER = "0.0.35alpha";
+    public static final String MIN_MCJTYLIB_VER = "2.3.1";
+    public static final String COMPATLAYER_VER = "0.1.3";
 
     @SidedProxy(clientSide="romelo333.rflux.proxy.ClientProxy", serverSide="romelo333.rflux.proxy.ServerProxy")
     public static CommonProxy proxy;

@@ -7,9 +7,12 @@
   "variants": {
     "normal": [{}],
     "inventory": [{}],
-    "lit": {
-      "false": {},
-      "true": {}
+    "color": {
+      "white": { "textures": { "side": "rflux:blocks/white" } },
+      "blue": { "textures": { "side": "rflux:blocks/blue" } },
+      "green": { "textures": { "side": "rflux:blocks/green" } },
+      "red": { "textures": { "side": "rflux:blocks/red" } },
+      "yellow": { "textures": { "side": "rflux:blocks/yellow" } }
     }
   }
 }

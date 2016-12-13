@@ -2,13 +2,31 @@ package romelo333.rflux.blocks;
 
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import romelo333.rflux.ModBlocks;
 
-public class FlatLightBlock extends GenericLightBlock {
+import java.util.List;
+
+public class FlatLightBlock extends GenericLightBlock<LightTE> {
 
     public FlatLightBlock(boolean onOff, Class<? extends LightTE> clazz) {
         super("flatlightblock_" + (onOff ? "on" : "off"), clazz, FlatLightItemBlock.class, onOff);
     }
+
+    @Override
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
+        return onOff ? new LightTEFlatOn() : new LightTEFlatOff();
+    }
+
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
+        return onOff ? new LightTEFlatOn() : new LightTEFlatOff();
+    }
+
 
     @Override
     public GenericLightBlock getLitBlock() {
@@ -18,6 +36,13 @@ public class FlatLightBlock extends GenericLightBlock {
     @Override
     public GenericLightBlock getUnlitBlock() {
         return ModBlocks.flatLightBlockOff;
+    }
+
+    @Override
+    protected void clGetSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
+        for (BlockColor color : BlockColor.values()) {
+            subItems.add(makeColoredBlock(this, color, 1));
+        }
     }
 
     @Override

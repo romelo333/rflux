@@ -20,6 +20,8 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
 
     public static final String CMD_MODE = "mode";
 
+    private BlockColor color = BlockColor.WHITE;
+
     private boolean lit = false;
 
     private LightMode mode = LightMode.MODE_NORMAL;
@@ -163,6 +165,15 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
         return mode;
     }
 
+    public BlockColor getColor() {
+        return color;
+    }
+
+    public void setColor(BlockColor color) {
+        this.color = color;
+        markDirtyClient();
+    }
+
     @Override
     public void readFromNBT(NBTTagCompound tagCompound) {
         super.readFromNBT(tagCompound);
@@ -180,11 +191,13 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
     public void readRestorableFromNBT(NBTTagCompound tagCompound) {
         super.readRestorableFromNBT(tagCompound);
         mode = LightMode.values()[tagCompound.getByte("mode")];
+        color = BlockColor.values()[tagCompound.getInteger("color")];
     }
 
     @Override
     public void writeRestorableToNBT(NBTTagCompound tagCompound) {
         super.writeRestorableToNBT(tagCompound);
+        tagCompound.setInteger("color", color.ordinal());
         tagCompound.setByte("mode", (byte) mode.ordinal());
     }
 

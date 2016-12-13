@@ -31,7 +31,7 @@ public class ModBlocks {
 
     @SideOnly(Side.CLIENT)
     public static void initClientPost() {
-        lightBlockOn.initBlockColors();
-        lightBlockOff.initBlockColors();
+//        lightBlockOn.initBlockColors();
+//        lightBlockOff.initBlockColors();
     }
 }
