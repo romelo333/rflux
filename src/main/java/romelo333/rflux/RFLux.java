@@ -27,7 +27,7 @@ import java.io.File;
         acceptedMinecraftVersions = "[1.10,1.12)")
 public class RFLux implements ModBase {
     public static final String MODID = "rflux";
-    public static final String VERSION = "0.0.1";
+    public static final String VERSION = "0.1.0";
     public static final String MIN_FORGE10_VER = "12.18.1.2082";
     public static final String MIN_FORGE11_VER = "13.19.0.2157";
     public static final String MIN_MCJTYLIB_VER = "2.3.1";
