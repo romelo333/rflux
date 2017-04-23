@@ -1,9 +1,11 @@
 package romelo333.rflux.blocks;
 
+import mcjty.lib.compat.CompatBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumBlockRenderType;
@@ -20,8 +22,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
-public class InvisibleLightBlock extends Block {
+public class InvisibleLightBlock extends CompatBlock {
 
     public InvisibleLightBlock() {
         super(Material.AIR);
@@ -48,16 +51,15 @@ public class InvisibleLightBlock extends Block {
         return true;
     }
 
+    @Override
+    protected void clAddCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list, Entity entity) {
+    }
+
     @Nullable
     @Override
     public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
         return null;
     }
-//    @Nullable
-//    @Override
-//    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
-//        return null;
-//    }
 
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
