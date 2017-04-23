@@ -29,8 +29,10 @@ public class LightBlock extends GenericLightBlock<LightTE> {
 
     @Override
     protected void clGetSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
-        for (BlockColor color : BlockColor.values()) {
-            subItems.add(makeColoredBlock(this, color, 1));
+        if (!onOff) {
+            for (BlockColor color : BlockColor.values()) {
+                subItems.add(makeColoredBlock(this, color, 1));
+            }
         }
     }
 

@@ -22,10 +22,6 @@ public class FlatLightItemBlock extends GenericItemBlock {
         boolean rc = super.placeBlockAt(stack, player, world, pos, side, hitX, hitY, hitZ, newState);
         TileEntity te = world.getTileEntity(pos);
         if (te instanceof LightTE) {
-            float dx = Math.abs(0.5f - hitX);
-            float dy = Math.abs(0.5f - hitY);
-            float dz = Math.abs(0.5f - hitZ);
-
             side = side.getOpposite();
             world.setBlockState(pos, newState.getBlock().getDefaultState().withProperty(GenericBlock.FACING, side));
         }
