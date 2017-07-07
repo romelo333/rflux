@@ -1,11 +1,10 @@
 package romelo333.rflux;
 
 import mcjty.lib.base.ModBase;
-import mcjty.lib.compat.CompatCreativeTabs;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -40,10 +39,10 @@ public class RFLux implements ModBase {
     public static final int GUI_LIGHT = 1;
 
 
-    public static CreativeTabs tabRFLux = new CompatCreativeTabs("RFLux") {
+    public static CreativeTabs tabRFLux = new CreativeTabs("RFLux") {
         @Override
-        protected Item getItem() {
-            return Items.GLOWSTONE_DUST;
+        public ItemStack getTabIconItem() {
+            return new ItemStack(Items.GLOWSTONE_DUST);
         }
     };
 

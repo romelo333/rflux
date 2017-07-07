@@ -1,7 +1,5 @@
 package romelo333.rflux.varia;
 
-import mcjty.lib.tools.ChatTools;
-import mcjty.lib.tools.WorldTools;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,17 +9,28 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketSoundEffect;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 public class Tools {
     public static void error(EntityPlayer player, String msg) {
-        ChatTools.addChatMessage(player, new TextComponentString(TextFormatting.RED + msg));
+        ITextComponent component = new TextComponentString(TextFormatting.RED + msg);
+        if (player instanceof EntityPlayer) {
+            ((EntityPlayer) player).sendStatusMessage(component, false);
+        } else {
+            player.sendMessage(component);
+        }
     }
 
     public static void notify(EntityPlayer player, String msg) {
-        ChatTools.addChatMessage(player, new TextComponentString(TextFormatting.GREEN + msg));
+        ITextComponent component = new TextComponentString(TextFormatting.GREEN + msg);
+        if (player instanceof EntityPlayer) {
+            ((EntityPlayer) player).sendStatusMessage(component, false);
+        } else {
+            player.sendMessage(component);
+        }
     }
 
     public static void giveItem(World world, EntityPlayer player, Block block, int meta, int cnt, int x, int y, int z) {
@@ -29,7 +38,7 @@ public class Tools {
         if (!player.inventory.addItemStackToInventory(oldStack)) {
             // Not enough room. Spawn item in world.
             EntityItem entityItem = new EntityItem(world, x, y, z, oldStack);
-            WorldTools.spawnEntity(world, entityItem);
+            world.spawnEntity(entityItem);
         }
     }
 

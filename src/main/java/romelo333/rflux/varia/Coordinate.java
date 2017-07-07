@@ -1,7 +1,5 @@
 package romelo333.rflux.varia;
 
-import net.minecraft.util.EnumFacing;
-
 public class Coordinate {
     private final int x;
     private final int y;

@@ -3,14 +3,11 @@ package romelo333.rflux.blocks;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import romelo333.rflux.ModBlocks;
-
-import java.util.List;
 
 public class FlatLightBlock extends GenericLightBlock<LightTE> {
 

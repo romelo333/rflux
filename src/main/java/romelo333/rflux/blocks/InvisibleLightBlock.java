@@ -1,7 +1,7 @@
 package romelo333.rflux.blocks;
 
 import mcjty.lib.McJtyRegister;
-import mcjty.lib.compat.CompatBlock;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -24,7 +24,7 @@ import romelo333.rflux.RFLux;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class InvisibleLightBlock extends CompatBlock {
+public class InvisibleLightBlock extends Block {
 
     public InvisibleLightBlock() {
         super(Material.AIR);
@@ -51,7 +51,7 @@ public class InvisibleLightBlock extends CompatBlock {
     }
 
     @Override
-    protected void clAddCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> list, Entity entity) {
+    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
     }
 
     @Nullable
