@@ -24,7 +24,6 @@ public abstract class CommonProxy {
         ModItems.init();
         ModBlocks.init();
         readMainConfig();
-        ModCrafting.init();
 
         network = mcjty.lib.network.PacketHandler.registerMessages(RFLux.MODID, "rflux");
     }

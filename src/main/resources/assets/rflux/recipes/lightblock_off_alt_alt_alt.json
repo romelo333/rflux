@@ -1,0 +1,18 @@
+{
+  "result": {
+    "nbt": {
+      "color":1
+    },
+    "item": "rflux:lightblock_off"
+  },
+  "ingredients": [
+    {
+      "item": "rflux:lightblock_off"
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "dyeBlue"
+    }
+  ],
+  "type": "forge:ore_shapeless"
+}

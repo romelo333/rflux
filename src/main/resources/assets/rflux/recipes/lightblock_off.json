@@ -1,0 +1,25 @@
+{
+  "result": {
+    "nbt": {
+      "color":0
+    },
+    "item": "rflux:lightblock_off"
+  },
+  "pattern": [
+    "rgr",
+    "gBg",
+    "rgr"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "r": {
+      "item": "minecraft:redstone"
+    },
+    "B": {
+      "item": "minecraft:glass"
+    },
+    "g": {
+      "item": "minecraft:glowstone"
+    }
+  }
+}

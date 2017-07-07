@@ -1,0 +1,18 @@
+{
+  "result": {
+    "nbt": {
+      "color": 0
+    },
+    "item": "rflux:flatlightblock_off",
+    "count": 3
+  },
+  "pattern": [
+    "bbb"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "b": {
+      "item": "rflux:lightblock_off"
+    }
+  }
+}
