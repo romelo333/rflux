@@ -1,7 +1,7 @@
 package romelo333.rflux.blocks;
 
+import mcjty.lib.McJtyRegister;
 import mcjty.lib.compat.CompatBlock;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -17,9 +17,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import romelo333.rflux.RFLux;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -31,8 +31,7 @@ public class InvisibleLightBlock extends CompatBlock {
         setLightLevel(1.0f);
         setUnlocalizedName("rflux.invisibleblock");
         setRegistryName("invisible_block");
-        GameRegistry.register(this);
-        GameRegistry.register(new ItemBlock(this), getRegistryName());
+        McJtyRegister.registerLater(this, RFLux.instance, ItemBlock.class, null);
     }
 
     @SideOnly(Side.CLIENT)

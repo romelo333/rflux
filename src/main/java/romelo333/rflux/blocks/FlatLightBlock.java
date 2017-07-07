@@ -6,6 +6,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import romelo333.rflux.ModBlocks;
 
@@ -39,10 +40,10 @@ public class FlatLightBlock extends GenericLightBlock<LightTE> {
     }
 
     @Override
-    protected void clGetSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
+    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
         if (!onOff) {
             for (BlockColor color : BlockColor.values()) {
-                subItems.add(makeColoredBlock(this, color, 1));
+                items.add(makeColoredBlock(this, color, 1));
             }
         }
     }

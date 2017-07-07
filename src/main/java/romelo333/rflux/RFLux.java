@@ -20,18 +20,13 @@ import java.io.File;
 @Mod(modid = RFLux.MODID, name="RF Lux",
         dependencies =
                         "required-after:mcjtylib_ng@[" + RFLux.MIN_MCJTYLIB_VER + ",);" +
-                        "required-after:compatlayer@[" + RFLux.COMPATLAYER_VER + ",);" +
-                        "after:Forge@[" + RFLux.MIN_FORGE10_VER + ",);" +
                         "after:forge@[" + RFLux.MIN_FORGE11_VER + ",)",
-        version = RFLux.VERSION,
-        acceptedMinecraftVersions = "[1.10,1.12)")
+        version = RFLux.VERSION)
 public class RFLux implements ModBase {
     public static final String MODID = "rflux";
     public static final String VERSION = "0.1.1";
-    public static final String MIN_FORGE10_VER = "12.18.1.2082";
     public static final String MIN_FORGE11_VER = "13.19.0.2157";
     public static final String MIN_MCJTYLIB_VER = "2.3.1";
-    public static final String COMPATLAYER_VER = "0.1.3";
 
     @SidedProxy(clientSide="romelo333.rflux.proxy.ClientProxy", serverSide="romelo333.rflux.proxy.ServerProxy")
     public static CommonProxy proxy;

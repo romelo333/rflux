@@ -1,10 +1,12 @@
 package romelo333.rflux.proxy;
 
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import romelo333.rflux.ModBlocks;
 import romelo333.rflux.RFLux;
 
@@ -12,17 +14,21 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void preInit(FMLPreInitializationEvent e) {
+        MinecraftForge.EVENT_BUS.register(this);
         super.preInit(e);
         OBJLoader.INSTANCE.addDomain(RFLux.MODID);
-        ModBlocks.initModels();
     }
 
     @Override
     public void init(FMLInitializationEvent e) {
         super.init(e);
-        MinecraftForge.EVENT_BUS.register(this);
-        ModBlocks.initClientPost();
     }
+
+    @SubscribeEvent
+    public void registerModels(ModelRegistryEvent event) {
+        ModBlocks.initModels();
+    }
+
 
 //    @SubscribeEvent
 //    public void renderWorldLastEvent(RenderWorldLastEvent evt) {
@@ -41,5 +47,6 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void postInit(FMLPostInitializationEvent e) {
         super.postInit(e);
+        ModBlocks.initClientPost();
     }
 }
