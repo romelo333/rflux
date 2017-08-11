@@ -20,6 +20,7 @@ import java.io.File;
         dependencies =
                         "required-after:mcjtylib_ng@[" + RFLux.MIN_MCJTYLIB_VER + ",);" +
                         "after:forge@[" + RFLux.MIN_FORGE11_VER + ",)",
+        acceptedMinecraftVersions = "[1.12,1.13)",
         version = RFLux.VERSION)
 public class RFLux implements ModBase {
     public static final String MODID = "rflux";
