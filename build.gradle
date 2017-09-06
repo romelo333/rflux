@@ -55,10 +55,11 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 minecraft {
-    version = "1.12.1-14.22.0.2447"
+    version = "1.12.1-14.22.0.2469"
     runDir = "run"
     mappings = "snapshot_20170810"
     useDepAts = true
+    clientJvmArgs += "-Dfml.coreMods.load=elucent.albedo.asm.FMLPlugin"
 }
 
 dependencies {

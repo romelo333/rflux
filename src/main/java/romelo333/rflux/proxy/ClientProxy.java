@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import romelo333.rflux.ClientEventHandler;
 import romelo333.rflux.ModBlocks;
 import romelo333.rflux.RFLux;
 
@@ -17,6 +18,7 @@ public class ClientProxy extends CommonProxy {
         MinecraftForge.EVENT_BUS.register(this);
         super.preInit(e);
         OBJLoader.INSTANCE.addDomain(RFLux.MODID);
+        ClientEventHandler.subscribeMe();
     }
 
     @Override
