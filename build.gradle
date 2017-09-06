@@ -47,7 +47,7 @@ repositories {
     }
 }
 
-version = "1.12-0.1.1"
+version = "1.12-0.1.2"
 group= "romelo333.rflux" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "rflux"
 
