@@ -16,7 +16,8 @@
       "item": "minecraft:redstone"
     },
     "B": {
-      "item": "minecraft:glass"
+      "type": "forge:ore_dict",
+      "ore": "blockGlass"
     },
     "g": {
       "item": "minecraft:glowstone"
