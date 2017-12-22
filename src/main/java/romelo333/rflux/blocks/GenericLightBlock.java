@@ -106,15 +106,14 @@ public abstract class GenericLightBlock<T extends LightTE> extends GenericBlock<
 
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
-        if (hasNoRotation()) {
+        if (getRotationType() == RotationType.NONE) {
             return super.getBoundingBox(state, world, pos);
         }
         IBlockState blockState = world.getBlockState(pos);
         if (blockState.getBlock() instanceof GenericLightBlock) {
             TileEntity te = world.getTileEntity(pos);
             if (te instanceof LightTE) {
-                LightTE lightTE = (LightTE) te;
-                EnumFacing side = getOrientation(blockState.getBlock().getMetaFromState(blockState));
+                EnumFacing side = getFrontDirection(blockState);
                 switch (side) {
                     case DOWN:
                         return BLOCK_DOWN;
@@ -157,13 +156,15 @@ public abstract class GenericLightBlock<T extends LightTE> extends GenericBlock<
 
     @Override
     protected BlockStateContainer createBlockState() {
-        if (hasNoRotation()) {
-            return new BlockStateContainer(this, COLOR);
-        } else if (isHorizRotation()) {
-            return new BlockStateContainer(this, FACING_HORIZ, COLOR);
-        } else {
-            return new BlockStateContainer(this, FACING, COLOR);
+        switch (getRotationType()) {
+            case HORIZROTATION:
+                return new BlockStateContainer(this, FACING_HORIZ, COLOR);
+            case ROTATION:
+                return new BlockStateContainer(this, FACING, COLOR);
+            case NONE:
+                return new BlockStateContainer(this, COLOR);
         }
+        return new BlockStateContainer(this, COLOR);
     }
 
 }

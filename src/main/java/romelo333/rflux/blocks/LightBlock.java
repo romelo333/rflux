@@ -1,6 +1,7 @@
 package romelo333.rflux.blocks;
 
 
+import mcjty.lib.container.BaseBlock;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -45,7 +46,7 @@ public class LightBlock extends GenericLightBlock<LightTE> {
     }
 
     @Override
-    public boolean hasNoRotation() {
-        return true;
+    public RotationType getRotationType() {
+        return RotationType.NONE;
     }
 }
