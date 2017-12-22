@@ -1,6 +1,7 @@
 package romelo333.rflux.blocks;
 
-import mcjty.lib.container.BaseBlock;
+import elucent.albedo.lighting.ILightProvider;
+import elucent.albedo.lighting.Light;
 import mcjty.lib.container.GenericBlock;
 import mcjty.lib.entity.GenericEnergyReceiverTileEntity;
 import mcjty.lib.network.Argument;
@@ -12,16 +13,22 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Optional;
 import romelo333.rflux.Config;
 import romelo333.rflux.ModBlocks;
 
 import java.util.Map;
 
-public class LightTE extends GenericEnergyReceiverTileEntity implements ITickable {
+@Optional.InterfaceList({
+        @Optional.Interface(iface = "elucent.albedo.lighting.ILightProvider", modid = "albedo")
+})
+public class LightTE extends GenericEnergyReceiverTileEntity implements ITickable, ILightProvider {
 
     public static final String CMD_MODE = "mode";
 
     private BlockColor color = BlockColor.WHITE;
+
+    private Object light = null;
 
     private boolean lit = false;
 
@@ -39,6 +46,20 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
 
     public boolean isLit() {
         return lit;
+    }
+
+    @Optional.Method(modid = "albedo")
+    @Override
+    public Light provideLight() {
+        if (light == null) {
+            if (lit) {
+                light = new Light(pos.getX(), pos.getY(), pos.getZ(), color.getR(), color.getG(), color.getB(), 1.0f,
+                        mode == LightMode.MODE_NORMAL ? 16.0f :
+                                mode == LightMode.MODE_EXTENDED ? 20.0f :
+                                        24.0f);
+            }
+        }
+        return (Light) light;
     }
 
     @Override
@@ -59,9 +80,10 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
             if (newlit != lit) {
                 // State has changed so we must update.
                 lit = newlit;
+                light = null;
                 IBlockState oldState = getWorld().getBlockState(pos);
                 GenericLightBlock block = (GenericLightBlock) oldState.getBlock();
-                if (block.getRotationType() == BaseBlock.RotationType.NONE) {
+                if (block.hasNoRotation()) {
                     if (lit) {
                         getWorld().setBlockState(pos, block.getLitBlock().getDefaultState(), 3);
                     } else {
@@ -154,6 +176,7 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
         if (mode == this.mode) {
             return;
         }
+        light = null;
         boolean oldlit = lit;
         this.lit = false;    // Force a relight
         updateLightBlocks(lit);
@@ -172,6 +195,7 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
 
     public void setColor(BlockColor color) {
         this.color = color;
+        this.light = null;
         markDirtyClient();
     }
 
