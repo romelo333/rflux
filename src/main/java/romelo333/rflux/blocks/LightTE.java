@@ -2,6 +2,7 @@ package romelo333.rflux.blocks;
 
 import elucent.albedo.lighting.ILightProvider;
 import elucent.albedo.lighting.Light;
+import mcjty.lib.container.BaseBlock;
 import mcjty.lib.container.GenericBlock;
 import mcjty.lib.entity.GenericEnergyReceiverTileEntity;
 import mcjty.lib.network.Argument;
@@ -83,7 +84,7 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
                 light = null;
                 IBlockState oldState = getWorld().getBlockState(pos);
                 GenericLightBlock block = (GenericLightBlock) oldState.getBlock();
-                if (block.hasNoRotation()) {
+                if (block.getRotationType() == BaseBlock.RotationType.NONE) {
                     if (lit) {
                         getWorld().setBlockState(pos, block.getLitBlock().getDefaultState(), 3);
                     } else {
