@@ -24,9 +24,9 @@ import java.io.File;
         version = RFLux.VERSION)
 public class RFLux implements ModBase {
     public static final String MODID = "rflux";
-    public static final String VERSION = "0.1.2";
+    public static final String VERSION = "0.2.0";
     public static final String MIN_FORGE11_VER = "13.19.0.2157";
-    public static final String MIN_MCJTYLIB_VER = "2.3.1";
+    public static final String MIN_MCJTYLIB_VER = "2.6.0";
 
     @SidedProxy(clientSide="romelo333.rflux.proxy.ClientProxy", serverSide="romelo333.rflux.proxy.ServerProxy")
     public static CommonProxy proxy;
