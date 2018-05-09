@@ -4,11 +4,12 @@ import elucent.albedo.lighting.ILightProvider;
 import elucent.albedo.lighting.Light;
 import mcjty.lib.container.BaseBlock;
 import mcjty.lib.container.GenericBlock;
+import mcjty.lib.entity.DefaultValue;
 import mcjty.lib.entity.GenericEnergyReceiverTileEntity;
-import mcjty.lib.network.Argument;
-import mcjty.lib.varia.RedstoneMode;
+import mcjty.lib.entity.IValue;
+import mcjty.lib.typed.Key;
+import mcjty.lib.typed.Type;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -18,14 +19,10 @@ import net.minecraftforge.fml.common.Optional;
 import romelo333.rflux.Config;
 import romelo333.rflux.ModBlocks;
 
-import java.util.Map;
-
 @Optional.InterfaceList({
         @Optional.Interface(iface = "elucent.albedo.lighting.ILightProvider", modid = "albedo")
 })
 public class LightTE extends GenericEnergyReceiverTileEntity implements ITickable, ILightProvider {
-
-    public static final String CMD_MODE = "mode";
 
     private BlockColor color = BlockColor.WHITE;
 
@@ -35,6 +32,16 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
 
     private LightMode mode = LightMode.MODE_NORMAL;
     private int checkLitCounter = 10;
+
+    public static final Key<Integer> VALUE_MODE = new Key<>("mode", Type.INTEGER);
+
+    @Override
+    public IValue[] getValues() {
+        return new IValue[] {
+                new DefaultValue<>(VALUE_RSMODE, LightTE::getRSModeInt, LightTE::setRSModeInt),
+                new DefaultValue<>(VALUE_MODE, te -> ((LightTE)te).getMode().ordinal(), (te,v) -> ((LightTE)te).setMode(LightMode.values()[v])),
+        };
+    }
 
     @Override
     protected boolean needsRedstoneMode() {
@@ -226,21 +233,4 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
         tagCompound.setInteger("color", color.ordinal());
         tagCompound.setByte("mode", (byte) mode.ordinal());
     }
-
-    @Override
-    public boolean execute(EntityPlayerMP playerMP, String command, Map<String, Argument> args) {
-        boolean rc = super.execute(playerMP, command, args);
-        if (rc) {
-            return true;
-        }
-        if (CMD_MODE.equals(command)) {
-            String m = args.get("rs").getString();
-            setRSMode(RedstoneMode.getMode(m));
-            setMode(LightMode.values()[args.get("mode").getInteger()]);
-            return true;
-        }
-        return false;
-    }
-
-
 }
