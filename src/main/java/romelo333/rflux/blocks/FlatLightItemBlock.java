@@ -1,7 +1,7 @@
 package romelo333.rflux.blocks;
 
-import mcjty.lib.container.GenericBlock;
-import mcjty.lib.container.GenericItemBlock;
+import mcjty.lib.blocks.GenericBlock;
+import mcjty.lib.blocks.GenericItemBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;

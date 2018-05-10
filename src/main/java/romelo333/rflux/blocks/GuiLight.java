@@ -2,8 +2,8 @@ package romelo333.rflux.blocks;
 
 import mcjty.lib.container.EmptyContainer;
 import mcjty.lib.container.GenericGuiContainer;
-import mcjty.lib.entity.GenericEnergyStorageTileEntity;
-import mcjty.lib.entity.GenericTileEntity;
+import mcjty.lib.tileentity.GenericEnergyStorageTileEntity;
+import mcjty.lib.tileentity.GenericTileEntity;
 import mcjty.lib.gui.layout.HorizontalLayout;
 import mcjty.lib.gui.layout.VerticalLayout;
 import mcjty.lib.gui.widgets.*;

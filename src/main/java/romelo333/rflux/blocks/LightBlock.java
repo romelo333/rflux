@@ -1,7 +1,6 @@
 package romelo333.rflux.blocks;
 
 
-import mcjty.lib.container.BaseBlock;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;

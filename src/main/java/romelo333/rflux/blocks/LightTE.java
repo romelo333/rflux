@@ -2,11 +2,11 @@ package romelo333.rflux.blocks;
 
 import elucent.albedo.lighting.ILightProvider;
 import elucent.albedo.lighting.Light;
-import mcjty.lib.container.BaseBlock;
-import mcjty.lib.container.GenericBlock;
-import mcjty.lib.entity.DefaultValue;
-import mcjty.lib.entity.GenericEnergyReceiverTileEntity;
-import mcjty.lib.entity.IValue;
+import mcjty.lib.blocks.BaseBlock;
+import mcjty.lib.blocks.GenericBlock;
+import mcjty.lib.bindings.DefaultValue;
+import mcjty.lib.tileentity.GenericEnergyReceiverTileEntity;
+import mcjty.lib.bindings.IValue;
 import mcjty.lib.typed.Key;
 import mcjty.lib.typed.Type;
 import net.minecraft.block.state.IBlockState;
