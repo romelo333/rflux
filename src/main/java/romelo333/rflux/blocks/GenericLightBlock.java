@@ -3,7 +3,7 @@ package romelo333.rflux.blocks;
 
 import mcjty.lib.container.EmptyContainer;
 import mcjty.lib.blocks.GenericBlock;
-import mcjty.lib.container.GenericGuiContainer;
+import mcjty.lib.gui.GenericGuiContainer;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
