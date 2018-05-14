@@ -1,5 +1,6 @@
 package romelo333.rflux.proxy;
 
+import mcjty.lib.proxy.AbstractCommonProxy;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -11,13 +12,13 @@ import org.apache.logging.log4j.Level;
 import romelo333.rflux.*;
 import romelo333.rflux.varia.WrenchChecker;
 
-public abstract class CommonProxy {
-
-    private Configuration mainConfig;
+public abstract class CommonProxy extends AbstractCommonProxy {
 
     public static SimpleNetworkWrapper network;
 
+    @Override
     public void preInit(FMLPreInitializationEvent e) {
+        super.preInit(e);
         MinecraftForge.EVENT_BUS.register(new ForgeEventHandlers());
 
         mainConfig = RFLux.config;
@@ -43,11 +44,15 @@ public abstract class CommonProxy {
         }
     }
 
+    @Override
     public void init(FMLInitializationEvent e) {
+        super.init(e);
         NetworkRegistry.INSTANCE.registerGuiHandler(RFLux.instance, new GuiProxy());
     }
 
+    @Override
     public void postInit(FMLPostInitializationEvent e) {
+        super.postInit(e);
         if (mainConfig.hasChanged()) {
             mainConfig.save();
         }

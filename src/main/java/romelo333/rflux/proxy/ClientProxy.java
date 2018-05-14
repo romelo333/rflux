@@ -1,5 +1,9 @@
 package romelo333.rflux.proxy;
 
+import com.google.common.util.concurrent.ListenableFuture;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;
@@ -10,6 +14,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import romelo333.rflux.ClientEventHandler;
 import romelo333.rflux.ModBlocks;
 import romelo333.rflux.RFLux;
+
+import java.util.concurrent.Callable;
 
 public class ClientProxy extends CommonProxy {
 
@@ -50,5 +56,25 @@ public class ClientProxy extends CommonProxy {
     public void postInit(FMLPostInitializationEvent e) {
         super.postInit(e);
         ModBlocks.initClientPost();
+    }
+
+    @Override
+    public World getClientWorld() {
+        return Minecraft.getMinecraft().world;
+    }
+
+    @Override
+    public EntityPlayer getClientPlayer() {
+        return Minecraft.getMinecraft().player;
+    }
+
+    @Override
+    public <V> ListenableFuture<V> addScheduledTaskClient(Callable<V> callableToSchedule) {
+        return Minecraft.getMinecraft().addScheduledTask(callableToSchedule);
+    }
+
+    @Override
+    public ListenableFuture<Object> addScheduledTaskClient(Runnable runnableToSchedule) {
+        return Minecraft.getMinecraft().addScheduledTask(runnableToSchedule);
     }
 }
