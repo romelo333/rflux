@@ -1,8 +1,8 @@
 package romelo333.rflux.blocks;
 
 
-import mcjty.lib.container.EmptyContainer;
 import mcjty.lib.blocks.GenericBlock;
+import mcjty.lib.container.EmptyContainer;
 import mcjty.lib.gui.GenericGuiContainer;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -140,7 +140,7 @@ public abstract class GenericLightBlock<T extends LightTE> extends GenericBlock<
     }
 
     @Override
-    public Class<? extends GenericGuiContainer> getGuiClass() {
+    public Class<? extends GenericGuiContainer<? super T>> getGuiClass() {
         return GuiLight.class;
     }
 

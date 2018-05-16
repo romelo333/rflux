@@ -58,7 +58,7 @@ public class GuiLight extends GenericGuiContainer<LightTE> {
         ImageChoiceLabel redstoneMode = initRedstoneMode();
         Panel controlPanel = new Panel(mc, this).setLayout(new VerticalLayout()).addChild(mode).addChild(redstoneMode);
 
-        Widget toplevel = new Panel(mc, this).setFilledRectThickness(2).setLayout(new HorizontalLayout()).addChild(energyBar).addChild(controlPanel);
+        Panel toplevel = new Panel(mc, this).setFilledRectThickness(2).setLayout(new HorizontalLayout()).addChild(energyBar).addChild(controlPanel);
         toplevel.setBounds(new Rectangle(guiLeft, guiTop, WIDTH, HEIGHT));
         window = new mcjty.lib.gui.Window(this, toplevel);
         tileEntity.requestRfFromServer(RFLux.MODID);
