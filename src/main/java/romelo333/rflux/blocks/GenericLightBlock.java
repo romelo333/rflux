@@ -41,7 +41,7 @@ public abstract class GenericLightBlock<T extends LightTE> extends GenericBlock<
     }
 
     public GenericLightBlock(String name, Class<? extends T> c, boolean onOff) {
-        super(RFLux.instance, Material.IRON, c, EmptyContainer.class, name, false);
+        super(RFLux.instance, Material.IRON, c, EmptyContainer::new, name, false);
         this.onOff = onOff;
         if (!this.onOff) {
             setCreativeTab(RFLux.tabRFLux);
@@ -52,7 +52,7 @@ public abstract class GenericLightBlock<T extends LightTE> extends GenericBlock<
     }
 
     public GenericLightBlock(String name, Class<? extends T> c, Class<? extends ItemBlock> itemBlockClass, boolean onOff) {
-        super(RFLux.instance, Material.IRON, c, EmptyContainer.class, itemBlockClass, name, false);
+        super(RFLux.instance, Material.IRON, c, EmptyContainer::new, itemBlockClass, name, false);
         this.onOff = onOff;
         if (!this.onOff) {
             setCreativeTab(RFLux.tabRFLux);
