@@ -29,6 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import romelo333.rflux.RFLux;
 
 import java.util.Map;
+import java.util.function.Function;
 
 public abstract class GenericLightBlock<T extends LightTE> extends GenericBlock<T, EmptyContainer> {
     protected final boolean onOff;
@@ -51,8 +52,8 @@ public abstract class GenericLightBlock<T extends LightTE> extends GenericBlock<
         setDefaultState(getDefaultState().withProperty(COLOR, BlockColor.WHITE));
     }
 
-    public GenericLightBlock(String name, Class<? extends T> c, Class<? extends ItemBlock> itemBlockClass, boolean onOff) {
-        super(RFLux.instance, Material.IRON, c, EmptyContainer::new, itemBlockClass, name, false);
+    public GenericLightBlock(String name, Class<? extends T> c, Function<Block, ItemBlock> itemBlockFunction, boolean onOff) {
+        super(RFLux.instance, Material.IRON, c, EmptyContainer::new, itemBlockFunction, name, false);
         this.onOff = onOff;
         if (!this.onOff) {
             setCreativeTab(RFLux.tabRFLux);
