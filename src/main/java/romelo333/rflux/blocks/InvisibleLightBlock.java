@@ -31,7 +31,7 @@ public class InvisibleLightBlock extends Block {
         setLightLevel(1.0f);
         setUnlocalizedName("rflux.invisibleblock");
         setRegistryName("invisible_block");
-        McJtyRegister.registerLater(this, RFLux.instance, ItemBlock.class);
+        McJtyRegister.registerLater(this, RFLux.instance, ItemBlock::new);
     }
 
     @SideOnly(Side.CLIENT)
