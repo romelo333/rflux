@@ -29,6 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import romelo333.rflux.RFLux;
 
 import java.util.Map;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public abstract class GenericLightBlock<T extends LightTE> extends GenericBlock<T, EmptyContainer> {
@@ -141,8 +142,8 @@ public abstract class GenericLightBlock<T extends LightTE> extends GenericBlock<
     }
 
     @Override
-    public Class<? extends GenericGuiContainer<? super T>> getGuiClass() {
-        return GuiLight.class;
+    public BiFunction<T, EmptyContainer, GenericGuiContainer<? super T>> getGuiFactory() {
+        return GuiLight::new;
     }
 
     @Override
