@@ -93,7 +93,7 @@ public class GuiLight extends GenericGuiContainer<LightTE> {
     @Override
     protected void drawGuiContainerBackgroundLayer(float v, int i, int i2) {
         drawWindow();
-        int currentRF = GenericEnergyStorageTileEntity.getCurrentRF();
+        long currentRF = GenericEnergyStorageTileEntity.getCurrentRF();
         energyBar.setValue(currentRF);
         tileEntity.requestRfFromServer(RFLux.MODID);
     }
