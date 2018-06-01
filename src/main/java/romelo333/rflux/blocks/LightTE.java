@@ -2,11 +2,11 @@ package romelo333.rflux.blocks;
 
 import elucent.albedo.lighting.ILightProvider;
 import elucent.albedo.lighting.Light;
+import mcjty.lib.bindings.DefaultValue;
+import mcjty.lib.bindings.IValue;
 import mcjty.lib.blocks.BaseBlock;
 import mcjty.lib.blocks.GenericBlock;
-import mcjty.lib.bindings.DefaultValue;
 import mcjty.lib.tileentity.GenericEnergyReceiverTileEntity;
-import mcjty.lib.bindings.IValue;
 import mcjty.lib.typed.Key;
 import mcjty.lib.typed.Type;
 import net.minecraft.block.state.IBlockState;
@@ -36,10 +36,10 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
     public static final Key<Integer> VALUE_MODE = new Key<>("mode", Type.INTEGER);
 
     @Override
-    public IValue[] getValues() {
+    public IValue<?>[] getValues() {
         return new IValue[] {
-                new DefaultValue<>(VALUE_RSMODE, LightTE::getRSModeInt, LightTE::setRSModeInt),
-                new DefaultValue<>(VALUE_MODE, te -> ((LightTE)te).getMode().ordinal(), (te,v) -> ((LightTE)te).setMode(LightMode.values()[v])),
+                new DefaultValue<>(VALUE_RSMODE, this::getRSModeInt, this::setRSModeInt),
+                new DefaultValue<>(VALUE_MODE, () -> this.getMode().ordinal(), (v) -> this.setMode(LightMode.values()[v])),
         };
     }
 
