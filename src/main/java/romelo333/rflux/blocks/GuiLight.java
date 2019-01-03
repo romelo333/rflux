@@ -2,19 +2,21 @@ package romelo333.rflux.blocks;
 
 import mcjty.lib.container.EmptyContainer;
 import mcjty.lib.gui.GenericGuiContainer;
-import mcjty.lib.tileentity.GenericEnergyStorageTileEntity;
-import mcjty.lib.tileentity.GenericTileEntity;
 import mcjty.lib.gui.layout.HorizontalLayout;
 import mcjty.lib.gui.layout.VerticalLayout;
-import mcjty.lib.gui.widgets.*;
+import mcjty.lib.gui.widgets.ChoiceLabel;
+import mcjty.lib.gui.widgets.EnergyBar;
+import mcjty.lib.gui.widgets.ImageChoiceLabel;
+import mcjty.lib.gui.widgets.Panel;
+import mcjty.lib.tileentity.GenericEnergyStorageTileEntity;
+import mcjty.lib.tileentity.GenericTileEntity;
 import mcjty.lib.varia.RedstoneMode;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import romelo333.rflux.Config;
 import romelo333.rflux.RFLux;
 import romelo333.rflux.proxy.CommonProxy;
 
-import java.awt.Rectangle;
+import java.awt.*;
 
 public class GuiLight extends GenericGuiContainer<LightTE> {
     public static final int WIDTH = 160;
@@ -41,7 +43,7 @@ public class GuiLight extends GenericGuiContainer<LightTE> {
 
     public GuiLight(LightTE te, EmptyContainer container) {
         super(RFLux.instance, CommonProxy.network, te, container, 0, "light block");
-        GenericEnergyStorageTileEntity.setCurrentRF(te.getEnergyStored(EnumFacing.DOWN));
+        GenericEnergyStorageTileEntity.setCurrentRF(te.getEnergyStored());
         xSize = WIDTH;
         ySize = HEIGHT;
     }
@@ -50,7 +52,7 @@ public class GuiLight extends GenericGuiContainer<LightTE> {
     public void initGui() {
         super.initGui();
 
-        int maxEnergyStored = tileEntity.getMaxEnergyStored(EnumFacing.DOWN);
+        int maxEnergyStored = tileEntity.getMaxEnergyStored();
         energyBar = new EnergyBar(mc, this).setFilledRectThickness(1).setVertical().setDesiredWidth(10).setMaxValue(maxEnergyStored).setShowText(false);
         energyBar.setValue(GenericEnergyStorageTileEntity.getCurrentRF());
 
