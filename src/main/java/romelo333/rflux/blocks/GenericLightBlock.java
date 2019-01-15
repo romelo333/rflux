@@ -1,7 +1,6 @@
 package romelo333.rflux.blocks;
 
 
-import mcjty.lib.McJtyLib;
 import mcjty.lib.blocks.GenericBlock;
 import mcjty.lib.container.EmptyContainer;
 import mcjty.lib.gui.GenericGuiContainer;
@@ -24,6 +23,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import romelo333.rflux.RFLux;
 
 import java.util.Map;
@@ -62,9 +64,10 @@ public abstract class GenericLightBlock<T extends LightTE> extends GenericBlock<
         setDefaultState(getDefaultState().withProperty(COLOR, BlockColor.WHITE));
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
     public void initModel() {
-        McJtyLib.proxy.initCustomMeshDefinition(Item.getItemFromBlock(this), new ItemMeshDefinition() {
+        ModelLoader.setCustomMeshDefinition(Item.getItemFromBlock(this), new ItemMeshDefinition() {
             @Override
             public ModelResourceLocation getModelLocation(ItemStack stack) {
                 return getModelResourceLocation(stack);
