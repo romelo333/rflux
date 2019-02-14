@@ -176,7 +176,7 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
     }
 
     @Override
-    public void onBlockBreak(World workd, BlockPos pos, IBlockState state) {
+    public void onBlockBreak(World world, BlockPos pos, IBlockState state) {
         updateLightBlocks(false);
     }
 
