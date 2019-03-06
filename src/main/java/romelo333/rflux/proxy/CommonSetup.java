@@ -1,6 +1,8 @@
 package romelo333.rflux.proxy;
 
-import mcjty.lib.proxy.AbstractCommonProxy;
+import mcjty.lib.setup.DefaultCommonSetup;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -12,7 +14,9 @@ import org.apache.logging.log4j.Level;
 import romelo333.rflux.*;
 import romelo333.rflux.varia.WrenchChecker;
 
-public abstract class CommonProxy extends AbstractCommonProxy {
+import java.io.File;
+
+public class CommonSetup extends DefaultCommonSetup {
 
     public static SimpleNetworkWrapper network;
 
@@ -21,12 +25,18 @@ public abstract class CommonProxy extends AbstractCommonProxy {
         super.preInit(e);
         MinecraftForge.EVENT_BUS.register(new ForgeEventHandlers());
 
-        mainConfig = RFLux.config;
+        mainConfig = new Configuration(new File(modConfigDir, "rflux.cfg"));
+
         ModItems.init();
         ModBlocks.init();
         readMainConfig();
 
         network = mcjty.lib.network.PacketHandler.registerMessages(RFLux.MODID, "rflux");
+    }
+
+    @Override
+    public void createTabs() {
+        createTab("RFLux", new ItemStack(Items.GLOWSTONE_DUST));
     }
 
     private void readMainConfig() {
@@ -36,7 +46,7 @@ public abstract class CommonProxy extends AbstractCommonProxy {
             cfg.addCustomCategoryComment(Config.POWER_CATEGORY, "Power configuration");
             Config.init(cfg);
         } catch (Exception e1) {
-            RFLux.logger.log(Level.ERROR, "Problem loading config file!", e1);
+            getLogger().log(Level.ERROR, "Problem loading config file!", e1);
         } finally {
             if (mainConfig.hasChanged()) {
                 mainConfig.save();

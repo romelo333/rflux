@@ -27,6 +27,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import romelo333.rflux.RFLux;
+import romelo333.rflux.proxy.GuiProxy;
 
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -46,7 +47,7 @@ public abstract class GenericLightBlock<T extends LightTE> extends GenericBlock<
         super(RFLux.instance, Material.IRON, c, EmptyContainer::new, name, false);
         this.onOff = onOff;
         if (!this.onOff) {
-            setCreativeTab(RFLux.tabRFLux);
+            setCreativeTab(RFLux.setup.getTab());
         }
         setSoundType(SoundType.GLASS);
         setLightLevel(this.onOff ? 1.0f : 0.0f);
@@ -57,7 +58,7 @@ public abstract class GenericLightBlock<T extends LightTE> extends GenericBlock<
         super(RFLux.instance, Material.IRON, c, EmptyContainer::new, itemBlockFunction, name, false);
         this.onOff = onOff;
         if (!this.onOff) {
-            setCreativeTab(RFLux.tabRFLux);
+            setCreativeTab(RFLux.setup.getTab());
         }
         setSoundType(SoundType.GLASS);
         setLightLevel(this.onOff ? 1.0f : 0.0f);
@@ -142,7 +143,7 @@ public abstract class GenericLightBlock<T extends LightTE> extends GenericBlock<
 
     @Override
     public int getGuiID() {
-        return RFLux.GUI_LIGHT;
+        return GuiProxy.GUI_LIGHT;
     }
 
     @Override

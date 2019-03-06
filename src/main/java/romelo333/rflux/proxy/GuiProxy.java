@@ -1,4 +1,4 @@
-package romelo333.rflux;
+package romelo333.rflux.proxy;
 
 import mcjty.lib.blocks.GenericBlock;
 import net.minecraft.block.Block;
@@ -9,6 +9,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
 public class GuiProxy implements IGuiHandler {
+
+    public static final int GUI_LIGHT = 1;
+
     @Override
     public Object getServerGuiElement(int guiid, EntityPlayer entityPlayer, World world, int x, int y, int z) {
         BlockPos pos = new BlockPos(x, y, z);

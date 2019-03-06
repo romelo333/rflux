@@ -40,7 +40,7 @@ public class WrenchChecker {
             try {
                 wrenchClasses.add(Class.forName(className));
             } catch (ClassNotFoundException e) {
-                RFLux.logger.log(Level.INFO, "Failed to load wrench class " + className + " (this is not an error)");
+                RFLux.setup.getLogger().log(Level.INFO, "Failed to load wrench class " + className + " (this is not an error)");
             }
         }
     }
