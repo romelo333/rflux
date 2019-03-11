@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import romelo333.rflux.proxy.CommonSetup;
+import romelo333.rflux.setup.CommonSetup;
 
 @Mod(modid = RFLux.MODID, name="RF Lux",
         dependencies =

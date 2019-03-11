@@ -14,7 +14,7 @@ import mcjty.lib.varia.RedstoneMode;
 import net.minecraft.util.ResourceLocation;
 import romelo333.rflux.ConfigSetup;
 import romelo333.rflux.RFLux;
-import romelo333.rflux.proxy.CommonSetup;
+import romelo333.rflux.setup.CommonSetup;
 
 import java.awt.*;
 

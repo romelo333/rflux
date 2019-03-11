@@ -27,7 +27,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import romelo333.rflux.RFLux;
-import romelo333.rflux.proxy.GuiProxy;
+import romelo333.rflux.setup.GuiProxy;
 
 import java.util.Map;
 import java.util.function.BiFunction;

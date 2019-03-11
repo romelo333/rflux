@@ -1,4 +1,4 @@
-package romelo333.rflux.proxy;
+package romelo333.rflux.setup;
 
 import mcjty.lib.blocks.GenericBlock;
 import net.minecraft.block.Block;
