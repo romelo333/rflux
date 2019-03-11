@@ -25,8 +25,6 @@ public class CommonSetup extends DefaultCommonSetup {
         super.preInit(e);
         MinecraftForge.EVENT_BUS.register(new ForgeEventHandlers());
 
-        mainConfig = new Configuration(new File(modConfigDir, "rflux.cfg"));
-
         ModItems.init();
         ModBlocks.init();
         readMainConfig();
@@ -39,7 +37,10 @@ public class CommonSetup extends DefaultCommonSetup {
         createTab("RFLux", new ItemStack(Items.GLOWSTONE_DUST));
     }
 
+    private Configuration mainConfig;
+
     private void readMainConfig() {
+        mainConfig = new Configuration(new File(modConfigDir, "rflux.cfg"));
         Configuration cfg = mainConfig;
         try {
             cfg.load();
