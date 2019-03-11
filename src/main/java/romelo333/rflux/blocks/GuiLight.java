@@ -12,7 +12,7 @@ import mcjty.lib.tileentity.GenericEnergyStorageTileEntity;
 import mcjty.lib.tileentity.GenericTileEntity;
 import mcjty.lib.varia.RedstoneMode;
 import net.minecraft.util.ResourceLocation;
-import romelo333.rflux.Config;
+import romelo333.rflux.ConfigSetup;
 import romelo333.rflux.RFLux;
 import romelo333.rflux.proxy.CommonSetup;
 
@@ -75,9 +75,9 @@ public class GuiLight extends GenericGuiContainer<LightTE> {
                 .addChoices(LightMode.MODE_NORMAL.getName(), LightMode.MODE_EXTENDED.getName(), LightMode.MODE_SUPER.getName())
                 .setDesiredWidth(130)
                 .setDesiredHeight(15);
-        mode.setChoiceTooltip(LightMode.MODE_NORMAL.getName(), "Same light value as a glowstone", "block (" + Config.LIGHTBLOCK_RFPERTICK_L0 + " RF/tick)");
-        mode.setChoiceTooltip(LightMode.MODE_EXTENDED.getName(), "Light up a bigger area", "blocks (" + Config.LIGHTBLOCK_RFPERTICK_L1 + " RF/tick)");
-        mode.setChoiceTooltip(LightMode.MODE_SUPER.getName(), "Light up the largest area", "blocks (" + Config.LIGHTBLOCK_RFPERTICK_L2 + " RF/tick)");
+        mode.setChoiceTooltip(LightMode.MODE_NORMAL.getName(), "Same light value as a glowstone", "block (" + ConfigSetup.LIGHTBLOCK_RFPERTICK_L0 + " RF/tick)");
+        mode.setChoiceTooltip(LightMode.MODE_EXTENDED.getName(), "Light up a bigger area", "blocks (" + ConfigSetup.LIGHTBLOCK_RFPERTICK_L1 + " RF/tick)");
+        mode.setChoiceTooltip(LightMode.MODE_SUPER.getName(), "Light up the largest area", "blocks (" + ConfigSetup.LIGHTBLOCK_RFPERTICK_L2 + " RF/tick)");
         mode.setChoice(tileEntity.getMode().getName());
         return mode;
     }

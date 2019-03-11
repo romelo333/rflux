@@ -16,7 +16,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Optional;
-import romelo333.rflux.Config;
+import romelo333.rflux.ConfigSetup;
 import romelo333.rflux.ModBlocks;
 
 @Optional.InterfaceList({
@@ -49,7 +49,7 @@ public class LightTE extends GenericEnergyReceiverTileEntity implements ITickabl
     }
 
     public LightTE() {
-        super(Config.LIGHTBLOCK_MAXRF, Config.LIGHTBLOCK_RECEIVEPERTICK);
+        super(ConfigSetup.LIGHTBLOCK_MAXRF, ConfigSetup.LIGHTBLOCK_RECEIVEPERTICK);
     }
 
     public boolean isLit() {

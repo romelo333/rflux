@@ -1,6 +1,6 @@
 package romelo333.rflux.blocks;
 
-import romelo333.rflux.Config;
+import romelo333.rflux.ConfigSetup;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,11 +29,11 @@ public enum LightMode {
     public int getRfUsage() {
         switch (this) {
             case MODE_NORMAL:
-                return Config.LIGHTBLOCK_RFPERTICK_L0;
+                return ConfigSetup.LIGHTBLOCK_RFPERTICK_L0;
             case MODE_EXTENDED:
-                return Config.LIGHTBLOCK_RFPERTICK_L1;
+                return ConfigSetup.LIGHTBLOCK_RFPERTICK_L1;
             case MODE_SUPER:
-                return Config.LIGHTBLOCK_RFPERTICK_L2;
+                return ConfigSetup.LIGHTBLOCK_RFPERTICK_L2;
             default:
                 return 0;
         }
