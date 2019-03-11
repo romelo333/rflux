@@ -4,12 +4,14 @@ import mcjty.lib.network.PacketHandler;
 import mcjty.lib.setup.DefaultCommonSetup;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import romelo333.rflux.*;
+import romelo333.rflux.ConfigSetup;
+import romelo333.rflux.ModBlocks;
+import romelo333.rflux.ModItems;
+import romelo333.rflux.RFLux;
 import romelo333.rflux.varia.WrenchChecker;
 
 public class CommonSetup extends DefaultCommonSetup {
@@ -20,7 +22,6 @@ public class CommonSetup extends DefaultCommonSetup {
     public void preInit(FMLPreInitializationEvent e) {
         super.preInit(e);
 
-        MinecraftForge.EVENT_BUS.register(new ForgeEventHandlers());
         NetworkRegistry.INSTANCE.registerGuiHandler(RFLux.instance, new GuiProxy());
 
         network = PacketHandler.registerMessages(RFLux.MODID, "rflux");

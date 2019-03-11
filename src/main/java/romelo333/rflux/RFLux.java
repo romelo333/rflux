@@ -22,7 +22,7 @@ public class RFLux implements ModBase {
     public static final String MIN_FORGE11_VER = "13.19.0.2157";
     public static final String MIN_MCJTYLIB_VER = "3.1.1";
 
-    @SidedProxy(clientSide="romelo333.rflux.proxy.ClientProxy", serverSide="romelo333.rflux.proxy.ServerProxy")
+    @SidedProxy(clientSide="romelo333.rflux.setup.ClientProxy", serverSide="romelo333.rflux.setup.ServerProxy")
     public static IProxy proxy;
     public static CommonSetup setup = new CommonSetup();
 
