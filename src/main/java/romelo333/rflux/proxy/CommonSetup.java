@@ -31,6 +31,11 @@ public class CommonSetup extends DefaultCommonSetup {
     }
 
     @Override
+    protected void setupModCompat() {
+
+    }
+
+    @Override
     public void createTabs() {
         createTab("RFLux", new ItemStack(Items.GLOWSTONE_DUST));
     }
