@@ -1,7 +1,7 @@
 package romelo333.rflux.setup;
 
 import mcjty.lib.network.PacketHandler;
-import mcjty.lib.setup.DefaultCommonSetup;
+import mcjty.lib.setup.DefaultModSetup;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -14,7 +14,7 @@ import romelo333.rflux.ModItems;
 import romelo333.rflux.RFLux;
 import romelo333.rflux.varia.WrenchChecker;
 
-public class CommonSetup extends DefaultCommonSetup {
+public class ModSetup extends DefaultModSetup {
 
     public static SimpleNetworkWrapper network;
 

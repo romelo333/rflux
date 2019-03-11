@@ -14,7 +14,7 @@ import mcjty.lib.varia.RedstoneMode;
 import net.minecraft.util.ResourceLocation;
 import romelo333.rflux.ConfigSetup;
 import romelo333.rflux.RFLux;
-import romelo333.rflux.setup.CommonSetup;
+import romelo333.rflux.setup.ModSetup;
 
 import java.awt.*;
 
@@ -42,7 +42,7 @@ public class GuiLight extends GenericGuiContainer<LightTE> {
     }
 
     public GuiLight(LightTE te, EmptyContainer container) {
-        super(RFLux.instance, CommonSetup.network, te, container, 0, "light block");
+        super(RFLux.instance, ModSetup.network, te, container, 0, "light block");
         GenericEnergyStorageTileEntity.setCurrentRF(te.getEnergyStored());
         xSize = WIDTH;
         ySize = HEIGHT;
@@ -65,8 +65,8 @@ public class GuiLight extends GenericGuiContainer<LightTE> {
         window = new mcjty.lib.gui.Window(this, toplevel);
         tileEntity.requestRfFromServer(RFLux.MODID);
 
-        window.bind(CommonSetup.network, "redstone", tileEntity, GenericTileEntity.VALUE_RSMODE.getName());
-        window.bind(CommonSetup.network, "mode", tileEntity, LightTE.VALUE_MODE.getName());
+        window.bind(ModSetup.network, "redstone", tileEntity, GenericTileEntity.VALUE_RSMODE.getName());
+        window.bind(ModSetup.network, "mode", tileEntity, LightTE.VALUE_MODE.getName());
     }
 
     private ChoiceLabel initMode() {
