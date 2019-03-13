@@ -24,8 +24,6 @@ public class ModSetup extends DefaultModSetup {
 
         NetworkRegistry.INSTANCE.registerGuiHandler(RFLux.instance, new GuiProxy());
 
-        ConfigSetup.init();
-
         network = PacketHandler.registerMessages(RFLux.MODID, "rflux");
 
         ModItems.init();
@@ -35,6 +33,11 @@ public class ModSetup extends DefaultModSetup {
     @Override
     protected void setupModCompat() {
 
+    }
+
+    @Override
+    protected void setupConfig() {
+        ConfigSetup.init();
     }
 
     @Override
