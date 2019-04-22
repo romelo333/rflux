@@ -42,7 +42,7 @@ public class ModSetup extends DefaultModSetup {
 
     @Override
     public void createTabs() {
-        createTab("RFLux", new ItemStack(Items.GLOWSTONE_DUST));
+        createTab("RFLux", () -> new ItemStack(Items.GLOWSTONE_DUST));
     }
 
     @Override
