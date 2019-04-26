@@ -18,9 +18,9 @@ import romelo333.rflux.setup.ModSetup;
         version = RFLux.VERSION)
 public class RFLux implements ModBase {
     public static final String MODID = "rflux";
-    public static final String VERSION = "0.3.2";
+    public static final String VERSION = "0.4.0";
     public static final String MIN_FORGE11_VER = "13.19.0.2157";
-    public static final String MIN_MCJTYLIB_VER = "3.1.1";
+    public static final String MIN_MCJTYLIB_VER = "3.5.0";
 
     @SidedProxy(clientSide="romelo333.rflux.setup.ClientProxy", serverSide="romelo333.rflux.setup.ServerProxy")
     public static IProxy proxy;
